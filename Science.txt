@@ -1,0 +1,70 @@
+#
+q:Brass gets discoloured in air because of the presence of which of the following gases in air?
+a:Oxygen
+a:Hydrogen sulphide
+a:Carbon dioxide
+a:Nitrogen
+c:Hydrogen sulphide
+#
+q:Which of the following is a non metal that remains liquid at room temperature?
+a:Phosphorous
+a:Bromine
+a:Chlorine
+a:Helium
+c:Bromine
+#
+q:Chlorophyll is a naturally occurring chelate compound in which central metal is
+a:copper
+a:magnesium
+a:iron
+a:calcium
+c:magnesium
+#
+q:Which of the following is used in pencils?
+a:Graphite
+a:Silicon
+a:Charcoal
+a:Phosphorous
+c:Graphite
+#
+q:Which of the following metals forms an amalgam with other metals?
+a:Tin
+a:Mercury
+a:Lead
+a:Zinc
+c:Mercury
+#
+q:The gas usually filled in the electric bulb is
+a:nitrogen
+a:hydrogen
+a:carbon dioxide
+a:oxygen
+c:nitrogen
+#
+q:The property of a substance to absorb moisture from the air on exposure is called
+a:osmosis
+a:deliquescence
+a:efflorescence
+a:desiccation
+c:deliquescence
+#
+q:In which of the following activities silicon carbide is used?
+a:Making cement and glass
+a:Disinfecting water of ponds
+a:cutting very hard substances
+a:Making casts for statues
+c:cutting very hard substances
+#
+q:The average salinity of sea water is
+a:3%
+a:3.5%
+a:2.5%
+a:2%
+c:3.5%
+#
+q:Which of the following is in liquid form at room temperature?
+a:Lithium
+a:Sodium
+a:Francium
+a:Cerium
+c:Francium

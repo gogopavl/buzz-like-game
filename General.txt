@@ -1,0 +1,70 @@
+#
+q:FRS stands for
+a:Fellow Research System
+a:Federation of Regulation Society
+a:Fellow of Royal Society
+a:None of the above
+c:Fellow of Royal Society
+#
+q:Entomology is the science that studies
+a:Behavior of human beings
+a:Insects
+a:The origin and history of technical and scientific terms
+a:The formation of rocks
+c:Insects
+#
+q:Eritrea, which became the 182nd member of the UN in 1993, is in the continent of
+a:Asia
+a:Africa
+a:Europe
+a:Australia
+c:Africa
+#
+q:Garampani sanctuary is located at
+a:Junagarh, Gujarat
+a:Diphu, Assam
+a:Kohima, Nagaland
+a:Gangtok, Sikkim
+c:Diphu, Assam
+#
+q:For which of the following disciplines is Nobel Prize awarded?
+a:Physics and Chemistry
+a:Physiology or Medicine
+a:Literature, Peace and Economics
+a:All of the above
+c:All of the above
+#
+q:Hitler party which came into power in 1933 is known as
+a:Labour Party
+a:Nazi Party
+a:Ku-Klux-Klan
+a:Democratic Party
+c:Nazi Party
+#
+q:FFC stands for
+a:Foreign Finance Corporation
+a:Film Finance Corporation
+a:Federation of Football Council
+a:None of the above
+c:Film Finance Corporation
+#
+q:Fastest shorthand writer was
+a:Dr. G. D. Bist
+a:J.R.D. Tata
+a:J.M. Tagore
+a:Khudada Khan
+c:Dr. G. D. Bist
+#
+q:First human heart transplant operation conducted by Dr. Christiaan Barnard on Louis Washkansky, was conducted in
+a:1967
+a:1968
+a:1958
+a:1922
+c:1967
+#
+q:Galileo was an Italian astronomer who
+a:developed the telescope
+a:discovered four satellites of Jupiter
+a:discovered that the movement of pendulum produces a regular time measurement
+a:All of the above
+c:All of the above

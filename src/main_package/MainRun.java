@@ -8,10 +8,8 @@ package main_package;
 
 import game.Game;
 import game.Player;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.io.BufferedReader;
 import java.util.Scanner;
-import rounds.CorrectAnswer;
 
 /**
  *
@@ -25,19 +23,19 @@ public class MainRun {
      */
     public static void main(String[] args) {
         input = new Scanner(System.in);
-                
-        
+        initializeGame();
+        gameSetup();       
     }
     
     public static void initializeGame(){
         int numberOfRounds;
         
-        System.out.print("Όνομα Χρήστη: ");
+        System.out.print("Εισάγετε Όνομα Χρήστη: ");
         String nameOfPlayer = input.nextLine();
         Player player = new Player(nameOfPlayer, 0);
         
         
-        System.out.print("Δώσε αριθμό γύρων: ");
+        System.out.print("Εισάγετε αριθμό γύρων: ");
         numberOfRounds = input.nextInt();
         
         buzzGame = new Game(numberOfRounds , 1);
@@ -50,15 +48,17 @@ public class MainRun {
            roundModulo = i % Game.getNUMBER_OF_ROUND_TYPES(); 
            switch(roundModulo){
                case 0: 
-                   //
+                   //new CorrectAnswer
                    break;
                case 1: 
-                   //
+                   //new Bet
                    break;
                default: 
-                   //
+                   //system error
                    break;
            }
         }         
     }
+    
+    
 }

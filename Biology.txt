@@ -1,0 +1,70 @@
+#
+q:Ordinary table salt is sodium chloride. What is baking soda?
+a:Potassium chloride
+a:Potassium carbonate
+a:Potassium hydroxide
+a:Sodium bicarbonate
+c:Sodium bicarbonate
+#
+q:Ozone hole refers to
+a:hole in ozone layer
+a:decrease in the ozone layer in troposphere
+a:decrease in thickness of ozone layer in stratosphere
+a:increase in the thickness of ozone layer in troposphere
+c:decrease in thickness of ozone layer in stratosphere
+#
+q:Pollination is best defined as
+a:transfer of pollen from anther to stigma
+a:germination of pollen grains
+a:growth of pollen tube in ovule
+a:visiting flowers by insects
+c:transfer of pollen from anther to stigma
+#
+q:Plants receive their nutrients mainly from
+a:chlorophyll
+a:atmosphere
+a:light
+a:soil
+c:soil
+#
+q:Movement of cell against concentration gradient is called
+a:osmosis
+a:active transport
+a:diffusion
+a:passive transport
+c:active transport
+#
+q:Process of cell division can take place by
+a:heterosis
+a:fusion
+a:mitosis
+a:None of these
+c:mitosis
+#
+q:Most highly intelligent mammals are
+a:whales
+a:dolphins
+a:elephants
+a:kangaroos
+c:dolphins
+#
+q:Plant development is influenced by
+a:quality of light only
+a:quality and quantity of light
+a:quality and duration of light
+a:quality, quantity and duration of light
+c:quality, quantity and duration of light
+#
+q:Prokaryotic cells lack
+a:nucleolus
+a:nuclear membrane
+a:membrane bound by organelles
+a:All of these
+c:All of these
+#
+q:Phloem is a tissue found in
+a:reproductive organs of animals
+a:plants
+a:insects
+a:mammals
+c:plants

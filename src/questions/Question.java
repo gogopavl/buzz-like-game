@@ -5,7 +5,6 @@
  */
 package questions;
 
-import java.util.HashMap;
 
 /**
  *
@@ -29,6 +28,8 @@ public class Question {
         sentence = s;
         possibleAnswers = pA;
         correctAnswer = cA;
+    }
+    public Question(){
     }
 
     /////////////////////////////////////////////////

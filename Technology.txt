@@ -1,0 +1,70 @@
+#
+q:What is part of a database that holds only one type of information?
+a:Report
+a:Field
+a:Record
+a:File
+c:Field
+#
+q:Which is a type of Electrically-Erasable Programmable Read-Only Memory?
+a:Flash
+a:Flange
+a:Fury
+a:FRAM
+c:Flash
+#
+q:Who developed Yahoo?
+a:Dennis Ritchie & Ken Thompson
+a:David Filo & Jerry Yang
+a:Vint Cerf & Robert Kahn
+a:Steve Case & Jeff Bezos
+c:David Filo & Jerry Yang
+#
+q:What does VVVF stand for?
+a:Variant Voltage Vile Frequency
+a:Variable Velocity Variable Fun
+a:Very Very Vicious Frequency
+a:Variable Voltage Variable Frequency
+c:Variable Voltage Variable Frequency
+#
+q:What frequency range is the High Frequency band?
+a:100 kHz
+a:1 GHz
+a:30 to 300 MHz
+a:3 to 30 MHz
+c:3 to 30 MHz
+#
+q:In which year was MIDI (Musical Instrument Digital Interface) introduced?
+a:1987
+a:1983
+a:1973
+a:1977
+c:1983
+#
+q:What does the term PLC stand for?
+a:Programmable Lift Computer
+a:Program List Control
+a:Programmable Logic Controller
+a:Piezo Lamp Connector
+c:Programmable Logic Controller
+#
+q:Who created Pretty Good Privacy (PGP)?
+a:Phil Zimmermann
+a:Tim Berners-Lee
+a:Marc Andreessen
+a:Ken Thompson
+c:Phil Zimmermann
+#
+q:In the United States the television broadcast standard is...?
+a:PAL
+a:NTSC
+a:SECAM
+a:RGB
+c:NTSC
+#
+q:The transformer that develops the high voltage in a home television is commonly called a...?
+a:Tesla coil
+a:Flyback
+a:Yoke
+a:Van de Graaf
+c:Flyback
