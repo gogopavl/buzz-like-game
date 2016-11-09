@@ -5,6 +5,8 @@
  */
 package game;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Bue
@@ -12,10 +14,12 @@ package game;
 public class Game {
     private int numberOfRounds;
     private int numberOfPlayers;
+    private ArrayList<Player> listOfPlayers;
 
     public Game(int nR, int nP) {
         numberOfRounds = nR;
         numberOfPlayers = nP;
+        listOfPlayers = new ArrayList<>();
     }
     
     public int getNumberOfRounds() {
@@ -32,6 +36,14 @@ public class Game {
 
     public void setNumberOfPlayers(int numberOfPlayers) {
         this.numberOfPlayers = numberOfPlayers;
+    }
+    
+    public void addPlayer(Player p){
+        listOfPlayers.add(p);
+    }
+    
+    public ArrayList<Player> getPlayers(){
+        return listOfPlayers;
     }
 
     
