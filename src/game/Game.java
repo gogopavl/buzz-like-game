@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class Game {
     private int numberOfRounds;
     private int numberOfPlayers;
+    private final static int NUMBER_OF_ROUND_TYPES = 2;
     private ArrayList<Player> listOfPlayers;
 
     public Game(int nR, int nP) {
@@ -46,6 +47,11 @@ public class Game {
         return listOfPlayers;
     }
 
+    public static int getNUMBER_OF_ROUND_TYPES() {
+        return NUMBER_OF_ROUND_TYPES;
+    }
+    
+    
     
     
 }
