@@ -1,7 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Main class to invoke all needed methods
  */
 package main_package;
 
@@ -23,7 +21,8 @@ public class MainRun {
     public static void main(String[] args) {
         input = new Scanner(System.in);
         initializeGame();
-        gameSetup();       
+        buzzGame.gameSetup(); 
+        buzzGame.startGame();
     }
     
     /**
@@ -36,33 +35,19 @@ public class MainRun {
         String nameOfPlayer = input.nextLine();
         Player player = new Player(nameOfPlayer, 0);
         
-        
-        System.out.print("Εισάγετε αριθμό γύρων: ");
+        buzzGame = new Game(); // second param is num of players - will be changed 
+                                                 // in the second version of our software
+                                                 
+        System.out.print("Εισάγετε αριθμό γύρων (1-" + buzzGame.getMaxNumberOfRounds() + "): ");
         numberOfRounds = input.nextInt();
         
-        buzzGame = new Game(numberOfRounds , 1);
+        buzzGame.setNumberOfRounds(numberOfRounds);
+        buzzGame.setNumberOfPlayers(1); 
         buzzGame.addPlayer(player);
+         
+        System.out.println("Number of Rounds is: " + buzzGame.getNumberOfRounds());
     }
-    /**
-     * Method that loads questions and rounds
-     */
-    public static void gameSetup(){
-        int roundModulo;
-        for (int i = 0 ; i < buzzGame.getNumberOfRounds() ; ++i ){
-           roundModulo = i % Game.getNUMBER_OF_ROUND_TYPES(); 
-           switch(roundModulo){
-               case 0: 
-                   //new CorrectAnswer
-                   break;
-               case 1: 
-                   //new Bet
-                   break;
-               default: 
-                   //system error
-                   break;
-           }
-        }         
-    }
+    
     
     
 }

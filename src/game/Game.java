@@ -10,8 +10,12 @@ import java.util.ArrayList;
 import rounds.Round;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.Scanner;
 import java.util.regex.Pattern;
 import questions.Question;
+import rounds.*;
 
 /**
  *
@@ -22,6 +26,7 @@ public class Game {
     private static BufferedReader br = null;
     
     private final static int NUMBER_OF_ROUND_TYPES = 2;
+    private final static int NUMBER_OF_QUESTIONS_PER_ROUND = 5;
     
     private int numberOfRounds;
     private int numberOfPlayers;
@@ -30,15 +35,10 @@ public class Game {
     private int currentRound;
     private ArrayList<Round> rounds;
     
-    
     /**
-     * Constructor
-     * @param nR number of game rounds
-     * @param nP number of players
+     * Empty Constructor - used to initialize a game
      */
-    public Game(int nR, int nP) {
-        numberOfRounds = nR;
-        numberOfPlayers = nP;
+    public Game(){ 
         listOfPlayers = new ArrayList<>();
         allQuestions = new ArrayList<>();
         currentRound = 0;
@@ -83,6 +83,72 @@ public class Game {
 
     public static int getNUMBER_OF_ROUND_TYPES() {
         return NUMBER_OF_ROUND_TYPES;
+    }
+    
+    public static int getNUMBER_OF_QUESTIONS_PER_ROUND() {
+        return NUMBER_OF_QUESTIONS_PER_ROUND;
+    }
+    
+    public int getMaxNumberOfRounds(){
+        return Math.floorDiv(allQuestions.size() , NUMBER_OF_QUESTIONS_PER_ROUND) ;
+    }
+    
+    /**
+     * Method that loads questions and rounds
+     */
+    public void gameSetup(){
+        int roundModulo;
+        
+        Collections.shuffle(allQuestions); // shuffling all questions - each round contains questions of any type
+        Iterator<Question> questionsIterator = allQuestions.iterator();
+        ArrayList<Question> tempQuestionList = new ArrayList<>(); 
+        
+        for (int i = 0 ; i < numberOfRounds ; ++i ){
+            
+           roundModulo = i % NUMBER_OF_ROUND_TYPES; // to make sure player plays as many different round types as possible 
+           
+           switch(roundModulo){
+               case 0: 
+                   // add NUMBER_OF_QUESTIONS_PER_ROUND to round object and remove them from allQuestions list
+                   for(int j = 0 ; j < NUMBER_OF_QUESTIONS_PER_ROUND ; ++j){
+                       tempQuestionList.add(questionsIterator.next());
+                       questionsIterator.remove();
+                   }
+                   System.out.println("tql size: " +tempQuestionList.size());
+                   rounds.add(new CorrectAnswer(NUMBER_OF_QUESTIONS_PER_ROUND , tempQuestionList));
+                   tempQuestionList.clear();
+                   break;
+               case 1: 
+                   // add NUMBER_OF_QUESTIONS_PER_ROUND to round object and remove them from allQuestions list
+                   for(int j = 0 ; j < NUMBER_OF_QUESTIONS_PER_ROUND ; ++j){
+                       tempQuestionList.add(questionsIterator.next());
+                       questionsIterator.remove();
+                   }
+                   System.out.println("tql size: " +tempQuestionList.size());
+                   rounds.add(new Bet(NUMBER_OF_QUESTIONS_PER_ROUND , tempQuestionList));
+                   tempQuestionList.clear();
+                   break;
+               default: 
+                   //system error
+                   break;
+           }
+        }         
+    }
+    
+    public void startGame(){
+        Scanner answerInput = new Scanner(System.in);
+        int userInput , roundNumber = 1;
+        
+        for(Round currentRound : rounds){
+            System.out.println("Example size " + currentRound.getNumberOfQuestions());
+            for(Question currentQuestion : currentRound.getRoundQuestions()){
+                currentQuestion.displayQuestion();
+                System.out.println("Για να απαντήσετε πιέστε από 1-4");
+                userInput = answerInput.nextInt();
+                currentQuestion.checkAnswer(userInput);
+            }
+            roundNumber++;
+        }
     }
     
     /**

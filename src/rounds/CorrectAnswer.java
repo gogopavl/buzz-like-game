@@ -20,6 +20,11 @@ public class CorrectAnswer extends Round{
      */
     public CorrectAnswer(int nQ, ArrayList<Question> rQ){
         super(nQ,rQ);  
+        
+    }
+    
+    public void playerAnswer(String selection){
+        
     }
     
     

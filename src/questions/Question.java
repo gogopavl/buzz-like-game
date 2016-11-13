@@ -69,4 +69,22 @@ public class Question {
     public void setCorrectAnswer(String correctAnswer) {
         this.correctAnswer = correctAnswer;
     }
+    
+    public void displayQuestion(){
+        System.out.println("in here!!");
+        System.out.println(sentence);
+        for(String s : possibleAnswers){
+            System.out.println(s);
+        }
+    }
+    
+    public boolean checkAnswer(int option){
+        if(possibleAnswers[option-1].equals(correctAnswer)){
+            System.out.println("is correct!!!!!!!");
+            return true;
+        }else{
+            System.out.println("is wrong!!!!");
+            return false;
+        }
+    }
 }
