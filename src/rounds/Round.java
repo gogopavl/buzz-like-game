@@ -1,7 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * 
+ * Class that implements a game round
+ * 
  */
 package rounds;
 
@@ -10,17 +10,23 @@ import questions.Question;
 
 /**
  *
- * @author Bue
+ * @author desppapa && gogopavl
  */
 public class Round {
     private int numberOfQuestions;
     private ArrayList<Question> roundQuestions;
-    
+    /**
+     * Constructor
+     * @param nQ number of questions
+     * @param rQ list of round questions
+     */
     public Round(int nQ, ArrayList<Question> rQ){
         numberOfQuestions = nQ;
         roundQuestions = rQ;
     }
-
+    /////////////////////////////////////////////////
+    //SETTERS & GETTERS
+    /////////////////////////////////////////////////    
     public int getNumberOfQuestions() {
         return numberOfQuestions;
     }

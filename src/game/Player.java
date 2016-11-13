@@ -1,23 +1,32 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * 
+ * Class that represents a Player's profile 
+ * 
  */
 package game;
 
 /**
  *
- * @author Bue
+ * @author desppapa && gogopavl
  */
 public class Player {
+    
     private String name;
     private int points;
     
+    /**
+     * Constructor
+     * @param n the player's name - must be unique
+     * @param p player's points
+     */
     public Player(String n, int p){
         name = n;
         points = p;
     }
-
+    
+    /////////////////////////////////////////////////
+    //SETTERS & GETTERS
+    /////////////////////////////////////////////////
     public String getName() {
         return name;
     }

@@ -1,14 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * 
+ * Class implementing the structure of any question
+ * 
  */
 package questions;
 
 
 /**
  *
- * @author Bue
+ * @author desppapa && gogopavl
  */
 public class Question {
     private String type;
@@ -17,7 +17,7 @@ public class Question {
     private String correctAnswer;
     
     /**
-     * 
+     * Constructor
      * @param t the question type e.g. "Sports"
      * @param s the question text 
      * @param pA array with all the possible answers
@@ -29,6 +29,9 @@ public class Question {
         possibleAnswers = pA;
         correctAnswer = cA;
     }
+    /**
+     * Default constructor
+     */
     public Question(){
     }
 

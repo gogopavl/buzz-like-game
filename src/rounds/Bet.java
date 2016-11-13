@@ -1,7 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * 
+ * Class that extends a Round object - type of a game round
+ * 
  */
 package rounds;
 
@@ -10,10 +10,14 @@ import questions.Question;
 
 /**
  *
- * @author Bue
+ * @author desppapa && gogopavl
  */
 public class Bet extends Round{
-    
+    /**
+     * Constructor
+     * @param nQ number of questions
+     * @param rQ list of round questions
+     */
     public Bet(int nQ, ArrayList<Question> rQ){
         super(nQ,rQ); 
     }

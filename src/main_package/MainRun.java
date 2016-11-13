@@ -6,14 +6,13 @@
 package main_package;
 
 
+import java.util.Scanner;
 import game.Game;
 import game.Player;
-import java.io.BufferedReader;
-import java.util.Scanner;
 
 /**
  *
- * @author gogopavl
+ * @author desppapa && gogopavl
  */
 public class MainRun {
     private static Scanner input;
@@ -27,6 +26,9 @@ public class MainRun {
         gameSetup();       
     }
     
+    /**
+     * Method that sets all required fields in order to start a game
+     */
     public static void initializeGame(){
         int numberOfRounds;
         
@@ -41,7 +43,9 @@ public class MainRun {
         buzzGame = new Game(numberOfRounds , 1);
         buzzGame.addPlayer(player);
     }
-    
+    /**
+     * Method that loads questions and rounds
+     */
     public static void gameSetup(){
         int roundModulo;
         for (int i = 0 ; i < buzzGame.getNumberOfRounds() ; ++i ){
