@@ -20,15 +20,8 @@ public class MainRun {
      */
     public static void main(String[] args) {
         input = new Scanner(System.in);
-        initializeGame();
-        buzzGame.gameSetup(); 
-        buzzGame.startGame();
-    }
-    
-    /**
-     * Method that sets all required fields in order to start a game
-     */
-    public static void initializeGame(){
+//        initializeGame();
+        
         int numberOfRounds;
         
         System.out.print("Εισάγετε Όνομα Χρήστη: ");
@@ -46,6 +39,19 @@ public class MainRun {
         buzzGame.addPlayer(player);
          
         System.out.println("Number of Rounds is: " + buzzGame.getNumberOfRounds());
+        
+        
+        
+        
+        buzzGame.gameSetup(); 
+        buzzGame.startGame();
+    }
+    
+    /**
+     * Method that sets all required fields in order to start a game
+     */
+    public static void initializeGame(){
+        
     }
     
     

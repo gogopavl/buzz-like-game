@@ -23,9 +23,6 @@ public class Round {
     public Round(int nQ, ArrayList<Question> rQ){
         numberOfQuestions = nQ;
         roundQuestions = rQ;
-        for(Question q : rQ){
-            System.out.println(q.getSentence());
-        }
     }
     /////////////////////////////////////////////////
     //SETTERS & GETTERS

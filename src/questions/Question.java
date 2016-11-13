@@ -71,7 +71,6 @@ public class Question {
     }
     
     public void displayQuestion(){
-        System.out.println("in here!!");
         System.out.println(sentence);
         for(String s : possibleAnswers){
             System.out.println(s);

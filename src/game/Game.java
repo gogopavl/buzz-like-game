@@ -101,10 +101,10 @@ public class Game {
         
         Collections.shuffle(allQuestions); // shuffling all questions - each round contains questions of any type
         Iterator<Question> questionsIterator = allQuestions.iterator();
-        ArrayList<Question> tempQuestionList = new ArrayList<>(); 
         
         for (int i = 0 ; i < numberOfRounds ; ++i ){
-            
+           ArrayList<Question> tempQuestionList = new ArrayList<>(); 
+
            roundModulo = i % NUMBER_OF_ROUND_TYPES; // to make sure player plays as many different round types as possible 
            
            switch(roundModulo){
@@ -114,9 +114,8 @@ public class Game {
                        tempQuestionList.add(questionsIterator.next());
                        questionsIterator.remove();
                    }
-                   System.out.println("tql size: " +tempQuestionList.size());
                    rounds.add(new CorrectAnswer(NUMBER_OF_QUESTIONS_PER_ROUND , tempQuestionList));
-                   tempQuestionList.clear();
+                   
                    break;
                case 1: 
                    // add NUMBER_OF_QUESTIONS_PER_ROUND to round object and remove them from allQuestions list
@@ -124,30 +123,36 @@ public class Game {
                        tempQuestionList.add(questionsIterator.next());
                        questionsIterator.remove();
                    }
-                   System.out.println("tql size: " +tempQuestionList.size());
                    rounds.add(new Bet(NUMBER_OF_QUESTIONS_PER_ROUND , tempQuestionList));
-                   tempQuestionList.clear();
+                   
                    break;
                default: 
                    //system error
                    break;
            }
-        }         
+           
+        }
     }
     
     public void startGame(){
         Scanner answerInput = new Scanner(System.in);
         int userInput , roundNumber = 1;
         
+        ArrayList<Question> localQuestionList;
+        
+        
         for(Round currentRound : rounds){
-            System.out.println("Example size " + currentRound.getNumberOfQuestions());
-            for(Question currentQuestion : currentRound.getRoundQuestions()){
+            
+            System.out.println("--------------------Γύρος " + roundNumber++ +"--------------------");
+            
+            localQuestionList = currentRound.getRoundQuestions();
+            
+            for(Question currentQuestion : localQuestionList){
                 currentQuestion.displayQuestion();
                 System.out.println("Για να απαντήσετε πιέστε από 1-4");
                 userInput = answerInput.nextInt();
                 currentQuestion.checkAnswer(userInput);
             }
-            roundNumber++;
         }
     }
     
@@ -223,8 +228,5 @@ public class Game {
                 }
         }
 
-    }   
-    
-    
-    
+    }    
 }
