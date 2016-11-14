@@ -70,19 +70,30 @@ public class Question {
         this.correctAnswer = correctAnswer;
     }
     
+    /////////////////////////////////////////////////
+    //METHODS
+    /////////////////////////////////////////////////
+    /**
+     * Method that prints the structure of a question and all its possible answers
+     */
     public void displayQuestion(){
+        int index = 1;
         System.out.println(sentence);
         for(String s : possibleAnswers){
-            System.out.println(s);
+            System.out.println((index++)+ ". " + s);
         }
     }
-    
+    /**
+     * Function that evaluates whether the given answer is correct or wrong
+     * @param option an integer that represents the given answer
+     * @return true if correct, otherwise false
+     */
     public boolean checkAnswer(int option){
         if(possibleAnswers[option-1].equals(correctAnswer)){
-            System.out.println("is correct!!!!!!!");
+            System.out.println("\nΣωστή απάντηση :)\n");
             return true;
         }else{
-            System.out.println("is wrong!!!!");
+            System.out.println("\nΛάθος απάντηση :(\n");
             return false;
         }
     }

@@ -43,6 +43,7 @@ public class Player {
         this.points = points;
     }
     
-    
-    
+    public void addPoints(int p) {
+        points = points + p;
+    }   
 }

@@ -32,7 +32,6 @@ public class Game {
     private int numberOfPlayers;
     private ArrayList<Player> listOfPlayers;
     private ArrayList<Question> allQuestions;
-    private int currentRound;
     private ArrayList<Round> rounds;
     
     /**
@@ -41,7 +40,6 @@ public class Game {
     public Game(){ 
         listOfPlayers = new ArrayList<>();
         allQuestions = new ArrayList<>();
-        currentRound = 0;
         rounds = new ArrayList<>();
         importQuestions(); // read files
     }
@@ -93,6 +91,9 @@ public class Game {
         return Math.floorDiv(allQuestions.size() , NUMBER_OF_QUESTIONS_PER_ROUND) ;
     }
     
+    /////////////////////////////////////////////////
+    //METHODS
+    /////////////////////////////////////////////////
     /**
      * Method that loads questions and rounds
      */
@@ -133,27 +134,30 @@ public class Game {
            
         }
     }
-    
+    /**
+     * Let the game begin!
+     */
     public void startGame(){
+        
         Scanner answerInput = new Scanner(System.in);
         int userInput , roundNumber = 1;
         
-        ArrayList<Question> localQuestionList;
-        
+        ArrayList<Question> localQuestionList;        
         
         for(Round currentRound : rounds){
             
-            System.out.println("--------------------Γύρος " + roundNumber++ +"--------------------");
+            System.out.println("\n--------------------Γύρος " + roundNumber++ +"--------------------");
+            currentRound.printRoundType();
             
             localQuestionList = currentRound.getRoundQuestions();
             
             for(Question currentQuestion : localQuestionList){
-                currentQuestion.displayQuestion();
-                System.out.println("Για να απαντήσετε πιέστε από 1-4");
-                userInput = answerInput.nextInt();
-                currentQuestion.checkAnswer(userInput);
+                
+                listOfPlayers.get(0).addPoints(currentRound.evaluateAnwser(currentQuestion));
+                
             }
         }
+        System.out.println("\nΤο παιχνίδι ολοκληρώθηκε! Το σκορ που σημειώσατε είναι: "+ listOfPlayers.get(0).getPoints() + " πόντοι.");
     }
     
     /**
