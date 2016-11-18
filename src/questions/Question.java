@@ -5,6 +5,9 @@
  */
 package questions;
 
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
 
 /**
  *
@@ -26,8 +29,9 @@ public class Question {
     public Question(String t, String s, String[] pA, String cA){
         type = t;
         sentence = s;
-        possibleAnswers = pA;
+        possibleAnswers = arrayShuffle(pA);
         correctAnswer = cA;
+        
     }
     /**
      * Default constructor
@@ -59,7 +63,7 @@ public class Question {
     }
 
     public void setPossibleAnswers(String[] possibleAnswers) {
-        this.possibleAnswers = possibleAnswers;
+        this.possibleAnswers = arrayShuffle(possibleAnswers);
     }
 
     public String getCorrectAnswer() {
@@ -97,4 +101,21 @@ public class Question {
             return false;
         }
     }
+    /**
+     * Function that shuffles a String[]'s contents using the Fisher–Yates shuffle algorithm
+     * @param ar The given String[]
+     * @return The shuffled String[]
+     */
+    public String[] arrayShuffle(String[] ar){
+        Random rnd = ThreadLocalRandom.current();
+        for (int i = ar.length - 1; i > 0; i--) {
+          int index = rnd.nextInt(i + 1);
+          // Simple swap
+          String a = ar[index];
+          ar[index] = ar[i];
+          ar[i] = a;
+        }
+        return ar;
+    }
+   
 }
