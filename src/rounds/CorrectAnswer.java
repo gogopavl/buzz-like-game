@@ -5,6 +5,7 @@
  */
 package rounds;
 
+import game.Game;
 import java.util.ArrayList;
 import questions.Question;
 
@@ -40,14 +41,16 @@ public class CorrectAnswer extends Round{
      */
     @Override
     public int evaluateAnwser(Question q){
-        int userInput;
+        String userInput;
        
         q.displayQuestion();
        
         System.out.print("Για να απαντήσετε πιέστε από 1-4: ");
-        userInput = answerInput.nextInt();
+        do{
+            userInput = answerInput.nextLine();
+        }while(!Game.validateInput(userInput, 4));
         
-        if(q.checkAnswer(userInput)){
+        if(q.checkAnswer(Integer.parseInt(userInput))){
             return 1000;
         }
         else {

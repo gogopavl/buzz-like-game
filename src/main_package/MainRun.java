@@ -4,6 +4,7 @@
 package main_package;
 
 
+import com.sun.xml.internal.ws.util.StringUtils;
 import java.util.Scanner;
 import game.Game;
 import game.Player;
@@ -22,27 +23,25 @@ public class MainRun {
         input = new Scanner(System.in);
 //        initializeGame();
         
-        int numberOfRounds;
+//        int numberOfRounds;
+        String numberOfRounds;
         
         System.out.print("Εισάγετε Όνομα Χρήστη: ");
         String nameOfPlayer = input.nextLine();
         Player player = new Player(nameOfPlayer, 0);
         
-        buzzGame = new Game(); // second param is num of players - will be changed 
-                                                 // in the second version of our software
-                                                 
+        buzzGame = new Game(); 
+        
         System.out.print("Εισάγετε αριθμό γύρων (1-" + buzzGame.getMaxNumberOfRounds() + "): ");
-        numberOfRounds = input.nextInt();
-        
-        buzzGame.setNumberOfRounds(numberOfRounds);
-        buzzGame.setNumberOfPlayers(1); 
+
+        do{
+            numberOfRounds = input.nextLine();
+        }while(!Game.validateInput(numberOfRounds, buzzGame.getMaxNumberOfRounds()));
+                  
+        buzzGame.setNumberOfRounds(Integer.parseInt(numberOfRounds));
+        buzzGame.setNumberOfPlayers(1); // only one player in first version
         buzzGame.addPlayer(player);
-         
-        System.out.println("Number of Rounds is: " + buzzGame.getNumberOfRounds());
-        
-        
-        
-        
+       
         buzzGame.gameSetup(); 
         buzzGame.startGame();
     }

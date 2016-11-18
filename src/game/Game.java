@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 import questions.Question;
@@ -98,17 +99,18 @@ public class Game {
      * Method that loads questions and rounds
      */
     public void gameSetup(){
-        int roundModulo;
+        Random r = new Random();
+        int roundType;
         
         Collections.shuffle(allQuestions); // shuffling all questions - each round contains questions of any type
         Iterator<Question> questionsIterator = allQuestions.iterator();
         
         for (int i = 0 ; i < numberOfRounds ; ++i ){
            ArrayList<Question> tempQuestionList = new ArrayList<>(); 
-
-           roundModulo = i % NUMBER_OF_ROUND_TYPES; // to make sure player plays as many different round types as possible 
            
-           switch(roundModulo){
+           roundType = r.nextInt(NUMBER_OF_ROUND_TYPES); // to make sure player plays as many different round types as possible 
+           
+           switch(roundType){
                case 0: 
                    // add NUMBER_OF_QUESTIONS_PER_ROUND to round object and remove them from allQuestions list
                    for(int j = 0 ; j < NUMBER_OF_QUESTIONS_PER_ROUND ; ++j){
@@ -158,6 +160,25 @@ public class Game {
             }
         }
         System.out.println("\nΤο παιχνίδι ολοκληρώθηκε! Το σκορ που σημειώσατε είναι: "+ listOfPlayers.get(0).getPoints() + " πόντοι.");
+    }
+    
+    public static boolean validateInput(String input, int limit){
+        try { 
+            Integer.parseInt(input); 
+        } catch(NumberFormatException e) {
+            System.out.println("Η είσοδός σας δεν είναι έγκυρη. Εισάγετε έναν αριθμό από 1-" + limit);
+            return false; 
+        } catch(NullPointerException e) {
+            System.out.println("Η είσοδός σας δεν είναι έγκυρη. Εισάγετε έναν αριθμό από 1-" + limit);
+            return false;
+        }
+        int integerInput = (Integer.parseInt(input));
+        // only got here if we didn't return false
+        if((integerInput < 1) || (integerInput>limit)){
+            System.out.println("Η είσοδός σας δεν είναι έγκυρη. Εισάγετε έναν αριθμό από 1-" + limit);
+            return false;
+        }
+        return true;
     }
     
     /**
