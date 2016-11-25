@@ -4,7 +4,6 @@
 package main_package;
 
 
-import com.sun.xml.internal.ws.util.StringUtils;
 import java.util.Scanner;
 import game.Game;
 import game.Player;
@@ -21,9 +20,7 @@ public class MainRun {
      */
     public static void main(String[] args) {
         input = new Scanner(System.in);
-//        initializeGame();
         
-//        int numberOfRounds;
         String numberOfRounds;
         
         System.out.print("Εισάγετε Όνομα Χρήστη: ");
@@ -44,15 +41,7 @@ public class MainRun {
        
         buzzGame.gameSetup(); 
         buzzGame.startGame();
-    }
-    
-    /**
-     * Method that sets all required fields in order to start a game
-     */
-    public static void initializeGame(){
-        
-    }
-    
+    } 
     
     
 }
