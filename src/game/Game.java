@@ -161,19 +161,21 @@ public class Game {
         }
         System.out.println("\nΤο παιχνίδι ολοκληρώθηκε! Το σκορ που σημειώσατε είναι: "+ listOfPlayers.get(0).getPoints() + " πόντοι.");
     }
-    
+    /**
+     * Function that receives the user's input and checks if it is valid
+     * 
+     * @param input String - user's input
+     * @param limit if the user submits a number that should be less or equal than some limit
+     * @return 
+     */
     public static boolean validateInput(String input, int limit){
         try { 
             Integer.parseInt(input); 
-        } catch(NumberFormatException e) {
+        } catch(NumberFormatException | NullPointerException e) {
             System.out.println("Η είσοδός σας δεν είναι έγκυρη. Εισάγετε έναν αριθμό από 1-" + limit);
             return false; 
-        } catch(NullPointerException e) {
-            System.out.println("Η είσοδός σας δεν είναι έγκυρη. Εισάγετε έναν αριθμό από 1-" + limit);
-            return false;
         }
         int integerInput = (Integer.parseInt(input));
-        // only got here if we didn't return false
         if((integerInput < 1) || (integerInput>limit)){
             System.out.println("Η είσοδός σας δεν είναι έγκυρη. Εισάγετε έναν αριθμό από 1-" + limit);
             return false;
