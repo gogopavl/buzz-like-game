@@ -1,13 +1,9 @@
-/**
- * 
- * Class that represents a Player's profile 
- * 
- */
 package game;
 
 /**
- *
- * @author desppapa && gogopavl
+ * Class that represents a Player's profile 
+ * @author desppapa
+ * @author gogopavl
  */
 public class Player {
     
@@ -27,22 +23,43 @@ public class Player {
     /////////////////////////////////////////////////
     //SETTERS & GETTERS
     /////////////////////////////////////////////////
+
+    /**
+     *
+     * @return the player's name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     *
+     * @param name a given name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     *
+     * @return a player's points
+     */
     public int getPoints() {
         return points;
     }
 
+    /**
+     *
+     * @param points a given number of points
+     */
     public void setPoints(int points) {
         this.points = points;
     }
     
+    /**
+     *
+     * @param p a given number of points
+     */
     public void addPoints(int p) {
         points = points + p;
     }   

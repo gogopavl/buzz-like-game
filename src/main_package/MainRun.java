@@ -1,6 +1,3 @@
-/**
- * Main class to invoke all needed methods
- */
 package main_package;
 
 
@@ -9,8 +6,9 @@ import game.Game;
 import game.Player;
 
 /**
- *
- * @author desppapa && gogopavl
+ * Main class to invoke all needed methods
+ * @author desppapa
+ * @author gogopavl
  */
 public class MainRun {
     private static Scanner input;

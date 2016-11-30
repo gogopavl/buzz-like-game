@@ -1,8 +1,3 @@
-/**
- * 
- * Class implementing the structure of any question
- * 
- */
 package questions;
 
 import java.util.Random;
@@ -10,8 +5,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 
 /**
- *
- * @author desppapa && gogopavl
+ * Class implementing the structure of any question
+ * @author desppapa
+ * @author gogopavl
  */
 public class Question {
     private String type;
@@ -42,34 +38,67 @@ public class Question {
     /////////////////////////////////////////////////
     //SETTERS & GETTERS
     /////////////////////////////////////////////////
+
+    /**
+     *
+     * @return the type of question
+     */
     public String getType() {
         return type;
     }
 
+    /**
+     *
+     * @param type a given string
+     */
     public void setType(String type) {
         this.type = type;
     }
 
+    /**
+     *
+     * @return the sentence
+     */
     public String getSentence() {
         return sentence;
     }
 
+    /**
+     *
+     * @param sentence a given string
+     */
     public void setSentence(String sentence) {
         this.sentence = sentence;
     }
 
+    /**
+     *
+     * @return the list of possible answers
+     */
     public String[] getPossibleAnswers() {
         return possibleAnswers;
     }
 
+    /**
+     *
+     * @param possibleAnswers a given string array
+     */
     public void setPossibleAnswers(String[] possibleAnswers) {
         this.possibleAnswers = arrayShuffle(possibleAnswers);
     }
 
+    /**
+     *
+     * @return the correct answer
+     */
     public String getCorrectAnswer() {
         return correctAnswer;
     }
 
+    /**
+     *
+     * @param correctAnswer a given string
+     */
     public void setCorrectAnswer(String correctAnswer) {
         this.correctAnswer = correctAnswer;
     }

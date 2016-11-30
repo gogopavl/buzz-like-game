@@ -1,8 +1,3 @@
-/**
- *
- * Class that represents a buzz game
- * 
- */
 package game;
 
 import java.io.BufferedReader;
@@ -19,8 +14,9 @@ import questions.Question;
 import rounds.*;
 
 /**
- *
- * @author desppapa && gogopavl
+ * Class that represents a buzz game
+ * @author desppapa
+ * @author gogopavl
  */
 public class Game {
     
@@ -48,46 +44,91 @@ public class Game {
     /////////////////////////////////////////////////
     //SETTERS & GETTERS
     /////////////////////////////////////////////////
+
+    /**
+     *
+     * @return the number of rounds
+     */
     public int getNumberOfRounds() {
         return numberOfRounds;
     }
 
+    /**
+     *
+     * @param numberOfRounds a given number
+     */
     public void setNumberOfRounds(int numberOfRounds) {
         this.numberOfRounds = numberOfRounds;
     }
 
+    /**
+     *
+     * @return the number of players
+     */
     public int getNumberOfPlayers() {
         return numberOfPlayers;
     }
 
+    /**
+     *
+     * @param numberOfPlayers a given number
+     */
     public void setNumberOfPlayers(int numberOfPlayers) {
         this.numberOfPlayers = numberOfPlayers;
     }
     
+    /**
+     *
+     * @param p a given player
+     */
     public void addPlayer(Player p){
         listOfPlayers.add(p);
     }
     
+    /**
+     *
+     * @return the list of players
+     */
     public ArrayList<Player> getPlayers(){
         return listOfPlayers;
     }
     
+    /**
+     *
+     * @param r a given round
+     */
     public void addRound(Round r){
         rounds.add(r);
     }
     
+    /**
+     *
+     * @return the list of rounds
+     */
     public ArrayList<Round> getRounds(){
         return rounds;
     }
 
+    /**
+     *
+     * @return the number of round types
+     */
     public static int getNUMBER_OF_ROUND_TYPES() {
         return NUMBER_OF_ROUND_TYPES;
     }
     
+    /**
+     *
+     * @return the number of questions per round
+     */
     public static int getNUMBER_OF_QUESTIONS_PER_ROUND() {
         return NUMBER_OF_QUESTIONS_PER_ROUND;
     }
     
+    /**
+     *
+     * @return the maximum number of rounds that can be played 
+     */
     public int getMaxNumberOfRounds(){
         return Math.floorDiv(allQuestions.size() , NUMBER_OF_QUESTIONS_PER_ROUND) ;
     }
@@ -137,7 +178,7 @@ public class Game {
         }
     }
     /**
-     * Let the game begin!
+     * Method that runs the game
      */
     public void startGame(){
         
@@ -166,7 +207,7 @@ public class Game {
      * 
      * @param input String - user's input
      * @param limit if the user submits a number that should be less or equal than some limit
-     * @return 
+     * @return true if input is acceptable, otherwise false
      */
     public static boolean validateInput(String input, int limit){
         try { 

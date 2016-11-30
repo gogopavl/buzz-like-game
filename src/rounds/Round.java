@@ -1,8 +1,3 @@
-/**
- * 
- * Class that implements a game round
- * 
- */
 package rounds;
 
 import java.util.ArrayList;
@@ -10,8 +5,9 @@ import java.util.Scanner;
 import questions.Question;
 
 /**
- *
- * @author desppapa && gogopavl
+ * Class that implements a game round
+ * @author desppapa
+ * @author gogopavl
  */
 public class Round {
     private int numberOfQuestions;
@@ -30,18 +26,35 @@ public class Round {
     /////////////////////////////////////////////////
     //SETTERS & GETTERS
     /////////////////////////////////////////////////    
+
+    /**
+     *
+     * @return the number of questions
+     */
     public int getNumberOfQuestions() {
         return numberOfQuestions;
     }
 
+    /**
+     *
+     * @param numberOfQuestions a given number
+     */
     public void setNumberOfQuestions(int numberOfQuestions) {
         this.numberOfQuestions = numberOfQuestions;
     }
 
+    /**
+     *
+     * @return the list of round questions
+     */
     public ArrayList<Question> getRoundQuestions() {
         return roundQuestions;
     }
 
+    /**
+     *
+     * @param roundQuestions a given array list of question
+     */
     public void setRoundQuestions(ArrayList<Question> roundQuestions) {
         this.roundQuestions = roundQuestions;
     }

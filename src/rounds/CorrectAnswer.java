@@ -1,8 +1,3 @@
-/**
- * 
- * Class that extends a Round object - type of a game round
- * 
- */
 package rounds;
 
 import game.Game;
@@ -10,8 +5,9 @@ import java.util.ArrayList;
 import questions.Question;
 
 /**
- *
- * @author desppapa && gogopavl
+ * Class that extends a Round object - type of a game round
+ * @author desppapa
+ * @author gogopavl
  */
 public class CorrectAnswer extends Round{
     /**
