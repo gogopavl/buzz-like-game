@@ -1,4 +1,4 @@
-package questions;
+package questions_package;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -106,6 +106,7 @@ public class Question {
     /////////////////////////////////////////////////
     //METHODS
     /////////////////////////////////////////////////
+    
     /**
      * Method that prints the structure of a question and all its possible answers
      */

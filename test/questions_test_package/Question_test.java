@@ -1,5 +1,6 @@
-package questions;
+package questions_test_package;
 
+import questions_package.Question;
 import java.util.Random;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -10,17 +11,18 @@ import static org.junit.Assert.*;
 
 /**
  *
+ * Class to test the functionality of Question class
  * @author desppapa
  * @author gogopavl
  */
-public class QuestionIT {
+public class Question_test {
     
     private Question testQuestion;
     
     /**
      * Not used
      */
-    public QuestionIT() {
+    public Question_test() {
     }
     
     /**

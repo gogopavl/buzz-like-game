@@ -1,7 +1,7 @@
-package main_package;
+package main_test_package;
 
-import game.Game;
-import game.Player;
+import game_package.Game;
+import game_package.Player;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -11,10 +11,11 @@ import static org.junit.Assert.*;
 
 /**
  *
+ * Class to test the functionality of MainClass
  * @author desppapa
  * @author gogopavl
  */
-public class MainRunIT {
+public class MainClass_test {
     
     private Game testBuzz;
     private Player testPlayer;
@@ -22,7 +23,7 @@ public class MainRunIT {
     /**
      * Not used
      */
-    public MainRunIT() {
+    public MainClass_test() {
     }
     
     /**

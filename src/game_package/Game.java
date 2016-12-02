@@ -1,8 +1,10 @@
-package game;
+package game_package;
 
+import rounds_package.CorrectAnswer;
+import rounds_package.Bet;
 import java.io.BufferedReader;
 import java.util.ArrayList;
-import rounds.Round;
+import rounds_package.Round;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collections;
@@ -10,11 +12,10 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Pattern;
-import questions.Question;
-import rounds.*;
+import questions_package.Question;
 
 /**
- * Class that represents a buzz game
+ * Class that represents a buzz game. Contains functions needed to implement the basic logic, to load the game questions and to validate the user's input
  * @author desppapa
  * @author gogopavl
  */
@@ -22,12 +23,12 @@ public class Game {
     
     private static BufferedReader br = null;
     
-    private final static int NUMBER_OF_ROUND_TYPES = 2;
-    private final static int NUMBER_OF_QUESTIONS_PER_ROUND = 5;
+    private final static int NUMBER_OF_ROUND_TYPES = 2; // Bet and CorrectAnswer
+    private final static int NUMBER_OF_QUESTIONS_PER_ROUND = 5; // We thought five was a good number of questions per round
     
     private int numberOfRounds;
     private int numberOfPlayers;
-    private ArrayList<Player> listOfPlayers;
+    private final ArrayList<Player> listOfPlayers;
     private ArrayList<Question> allQuestions;
     private ArrayList<Round> rounds;
     
@@ -136,6 +137,7 @@ public class Game {
     /////////////////////////////////////////////////
     //METHODS
     /////////////////////////////////////////////////
+    
     /**
      * Method that loads questions and rounds
      */
@@ -276,7 +278,6 @@ public class Game {
                             default:
                                 break; // what to do?
                         }
-                      
                     }
                     
                     tempQuestion.setPossibleAnswers(tempPossibleAnswers);
@@ -287,12 +288,10 @@ public class Game {
                 }
             }
         }catch(IOException e) {
-            e.printStackTrace();
         }finally{
                 try {
                     if (br != null)br.close();
                 }catch (IOException ex) {
-                    ex.printStackTrace();
                 }
         }
 

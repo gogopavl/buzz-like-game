@@ -1,5 +1,7 @@
-package game;
+package game_test_package;
 
+import game_package.Game;
+import game_package.Player;
 import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -10,17 +12,18 @@ import static org.junit.Assert.*;
 
 /**
  *
+ * Class to test the functionality of Game class
  * @author desppapa
  * @author gogopavl
  */
-public class GameIT {
+public class Game_test {
     
     private Game gameTest;
     
     /**
      * Not used
      */
-    public GameIT() {
+    public Game_test() {
     }
     
     /**

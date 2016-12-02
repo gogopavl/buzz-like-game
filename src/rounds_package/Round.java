@@ -1,8 +1,8 @@
-package rounds;
+package rounds_package;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import questions.Question;
+import questions_package.Question;
 
 /**
  * Class that implements a game round

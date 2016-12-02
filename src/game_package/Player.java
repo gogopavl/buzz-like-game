@@ -1,4 +1,4 @@
-package game;
+package game_package;
 
 /**
  * Class that represents a Player's profile 
