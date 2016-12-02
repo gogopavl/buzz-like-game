@@ -229,7 +229,7 @@ public class Game {
     /**
      * Function that calls the readQuestionsFromFile method with all question files as parameters
      */
-    public void importQuestions(){
+    public final void importQuestions(){
         readQuestionsFromFile("Technology.txt");
         readQuestionsFromFile("Biology.txt");
         readQuestionsFromFile("General.txt");
