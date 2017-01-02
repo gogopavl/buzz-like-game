@@ -35,16 +35,19 @@ public class BuzzGUI extends javax.swing.JFrame {
         label_NumberOfPlayers = new javax.swing.JLabel();
         comboBox_NumberOfPlayers = new javax.swing.JComboBox<>();
         button_Proceed = new javax.swing.JButton();
+        button_NewGame_Back = new javax.swing.JButton();
         SinglePlayerName = new javax.swing.JPanel();
         label_SingleName = new javax.swing.JLabel();
         textField_SingleName = new javax.swing.JTextField();
         button_SinglePlay = new javax.swing.JButton();
+        button_SinglePlay_Back = new javax.swing.JButton();
         MultiPlayerNames = new javax.swing.JPanel();
         label_MultiName1 = new javax.swing.JLabel();
         label_MultiName2 = new javax.swing.JLabel();
         textField_MultiName1 = new javax.swing.JTextField();
         textField_MultiName2 = new javax.swing.JTextField();
         button_MultiPlay = new javax.swing.JButton();
+        button_MultiPlay_Back = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.CardLayout());
@@ -115,6 +118,13 @@ public class BuzzGUI extends javax.swing.JFrame {
             }
         });
 
+        button_NewGame_Back.setText("Back");
+        button_NewGame_Back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_NewGame_BackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout NewGameLayout = new javax.swing.GroupLayout(NewGame);
         NewGame.setLayout(NewGameLayout);
         NewGameLayout.setHorizontalGroup(
@@ -126,9 +136,11 @@ public class BuzzGUI extends javax.swing.JFrame {
                         .addComponent(label_NumberOfPlayers, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(122, 122, 122))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, NewGameLayout.createSequentialGroup()
-                        .addGroup(NewGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(button_Proceed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(comboBox_NumberOfPlayers, 0, 181, Short.MAX_VALUE))
+                        .addGroup(NewGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(button_NewGame_Back, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(NewGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(button_Proceed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(comboBox_NumberOfPlayers, 0, 181, Short.MAX_VALUE)))
                         .addGap(246, 246, 246))))
         );
         NewGameLayout.setVerticalGroup(
@@ -140,7 +152,9 @@ public class BuzzGUI extends javax.swing.JFrame {
                 .addComponent(comboBox_NumberOfPlayers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(82, 82, 82)
                 .addComponent(button_Proceed, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(135, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(button_NewGame_Back, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         getContentPane().add(NewGame, "panel_NewGame");
@@ -158,20 +172,31 @@ public class BuzzGUI extends javax.swing.JFrame {
             }
         });
 
+        button_SinglePlay_Back.setText("Back");
+        button_SinglePlay_Back.setToolTipText("");
+        button_SinglePlay_Back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_SinglePlay_BackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout SinglePlayerNameLayout = new javax.swing.GroupLayout(SinglePlayerName);
         SinglePlayerName.setLayout(SinglePlayerNameLayout);
         SinglePlayerNameLayout.setHorizontalGroup(
             SinglePlayerNameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SinglePlayerNameLayout.createSequentialGroup()
-                .addGap(0, 149, Short.MAX_VALUE)
-                .addGroup(SinglePlayerNameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(textField_SingleName, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label_SingleName, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(SinglePlayerNameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(SinglePlayerNameLayout.createSequentialGroup()
+                        .addGap(67, 67, 67)
+                        .addComponent(button_SinglePlay, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(button_SinglePlay_Back, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(SinglePlayerNameLayout.createSequentialGroup()
+                        .addGap(0, 149, Short.MAX_VALUE)
+                        .addGroup(SinglePlayerNameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(textField_SingleName, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_SingleName, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(96, 96, 96))
-            .addGroup(SinglePlayerNameLayout.createSequentialGroup()
-                .addGap(229, 229, 229)
-                .addComponent(button_SinglePlay, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         SinglePlayerNameLayout.setVerticalGroup(
             SinglePlayerNameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,9 +205,11 @@ public class BuzzGUI extends javax.swing.JFrame {
                 .addComponent(label_SingleName)
                 .addGap(35, 35, 35)
                 .addComponent(textField_SingleName, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57)
-                .addComponent(button_SinglePlay, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(109, Short.MAX_VALUE))
+                .addGap(58, 58, 58)
+                .addGroup(SinglePlayerNameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(button_SinglePlay, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_SinglePlay_Back, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(108, Short.MAX_VALUE))
         );
 
         getContentPane().add(SinglePlayerName, "panel_SinglePlayerName");
@@ -204,28 +231,36 @@ public class BuzzGUI extends javax.swing.JFrame {
             }
         });
 
+        button_MultiPlay_Back.setText("Back");
+        button_MultiPlay_Back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_MultiPlay_BackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout MultiPlayerNamesLayout = new javax.swing.GroupLayout(MultiPlayerNames);
         MultiPlayerNames.setLayout(MultiPlayerNamesLayout);
         MultiPlayerNamesLayout.setHorizontalGroup(
             MultiPlayerNamesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(MultiPlayerNamesLayout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addComponent(button_MultiPlay, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(button_MultiPlay_Back, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MultiPlayerNamesLayout.createSequentialGroup()
-                .addContainerGap(160, Short.MAX_VALUE)
+                .addContainerGap(115, Short.MAX_VALUE)
                 .addGroup(MultiPlayerNamesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(MultiPlayerNamesLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MultiPlayerNamesLayout.createSequentialGroup()
+                        .addGroup(MultiPlayerNamesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(label_MultiName2, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_MultiName1, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(130, 130, 130))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MultiPlayerNamesLayout.createSequentialGroup()
                         .addGroup(MultiPlayerNamesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(textField_MultiName2, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(textField_MultiName1, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MultiPlayerNamesLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(MultiPlayerNamesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MultiPlayerNamesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(label_MultiName2, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(label_MultiName1, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MultiPlayerNamesLayout.createSequentialGroup()
-                                .addComponent(button_MultiPlay, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(148, 148, 148)))))
-                .addGap(65, 65, 65))
+                        .addGap(163, 163, 163))))
         );
         MultiPlayerNamesLayout.setVerticalGroup(
             MultiPlayerNamesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -238,9 +273,11 @@ public class BuzzGUI extends javax.swing.JFrame {
                 .addComponent(label_MultiName2)
                 .addGap(18, 18, 18)
                 .addComponent(textField_MultiName2, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
-                .addComponent(button_MultiPlay, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addGap(36, 36, 36)
+                .addGroup(MultiPlayerNamesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(button_MultiPlay, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_MultiPlay_Back, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
         getContentPane().add(MultiPlayerNames, "panel_MultiPlayerNames");
@@ -287,6 +324,24 @@ public class BuzzGUI extends javax.swing.JFrame {
         
     }//GEN-LAST:event_button_SinglePlayActionPerformed
 
+    private void button_NewGame_BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_NewGame_BackActionPerformed
+        // TODO add your handling code here:
+        this.Menu.setVisible(true);
+        this.NewGame.setVisible(false);
+    }//GEN-LAST:event_button_NewGame_BackActionPerformed
+
+    private void button_SinglePlay_BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_SinglePlay_BackActionPerformed
+        // TODO add your handling code here:
+        this.NewGame.setVisible(true);
+        this.SinglePlayerName.setVisible(false);
+    }//GEN-LAST:event_button_SinglePlay_BackActionPerformed
+
+    private void button_MultiPlay_BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_MultiPlay_BackActionPerformed
+        // TODO add your handling code here:
+        this.NewGame.setVisible(true);
+        this.MultiPlayerNames.setVisible(false);
+    }//GEN-LAST:event_button_MultiPlay_BackActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -329,9 +384,12 @@ public class BuzzGUI extends javax.swing.JFrame {
     private javax.swing.JPanel SinglePlayerName;
     private javax.swing.JButton button_Exit;
     private javax.swing.JButton button_MultiPlay;
+    private javax.swing.JButton button_MultiPlay_Back;
     private javax.swing.JButton button_NewGame;
+    private javax.swing.JButton button_NewGame_Back;
     private javax.swing.JButton button_Proceed;
     private javax.swing.JButton button_SinglePlay;
+    private javax.swing.JButton button_SinglePlay_Back;
     private javax.swing.JComboBox<String> comboBox_NumberOfPlayers;
     private javax.swing.JLabel label_MultiName1;
     private javax.swing.JLabel label_MultiName2;
