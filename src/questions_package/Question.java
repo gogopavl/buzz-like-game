@@ -27,7 +27,6 @@ public class Question {
         sentence = s;
         possibleAnswers = arrayShuffle(pA);
         correctAnswer = cA;
-        
     }
     /**
      * Default constructor

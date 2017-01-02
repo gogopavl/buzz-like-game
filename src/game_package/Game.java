@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Pattern;
+import questions_package.ImageQuestion;
 import questions_package.Question;
 
 /**
@@ -233,7 +234,11 @@ public class Game {
         readQuestionsFromFile("Technology.txt");
         readQuestionsFromFile("Biology.txt");
         readQuestionsFromFile("General.txt");
-        readQuestionsFromFile("Science.txt");        
+        readQuestionsFromFile("Science.txt");
+        readImageQuestionsFromFile("Cinema.txt");
+        readImageQuestionsFromFile("Music.txt");
+        
+        
     }
     /**
      * Method that reads a given file containing a question, its possible answers and the correct answer.
@@ -273,6 +278,70 @@ public class Game {
                                 break;
                             case "c": //it's the correct answer
                                 tempQuestion.setCorrectAnswer(tempSplittedString[1]);
+                                flag = false; // last line of question block in file, turn flag to false
+                                break;
+                            default:
+                                break; // what to do?
+                        }
+                    }
+                    
+                    tempQuestion.setPossibleAnswers(tempPossibleAnswers);
+                    TPAPosition = 0;  
+                    flag = true;
+                    
+                    allQuestions.add(tempQuestion);
+                }
+            }
+        }catch(IOException e) {
+        }finally{
+                try {
+                    if (br != null)br.close();
+                }catch (IOException ex) {
+                }
+        }
+
+    }
+    /**
+     * Method that reads a given file containing a question, its possible answers, the correct answer and the image filename.
+     * Its filename implies the question type.
+     * 
+     * @param filename name of file containing questions
+     */
+    public void readImageQuestionsFromFile(String filename){
+        try{
+            String currentLine; // variable used to store each line read
+            String[] tempSplittedString = new String[2]; // array used to store both parts of the string splitted (":")
+            Boolean flag = true; // variable to separate each question's data block
+            String questionType = filename.split(Pattern.quote("."))[0]; // variable used to fill the "type" field of a question object
+
+            br = new BufferedReader(new FileReader("questions/"+filename));
+            
+            while ((currentLine = br.readLine()) != null) {
+                if(currentLine.equals("#")){ // new question block
+                    
+                    ImageQuestion tempQuestion = new ImageQuestion(); // temp question object to form a new question
+                    String[] tempPossibleAnswers = new String[4]; // array of string to store each question's possible answers
+                    int TPAPosition = 0; // variable used to determine the index of the current possible answer
+                    
+                    tempQuestion.setType(questionType); // setting type according to filename
+                    
+                    while(flag){
+                        currentLine = br.readLine();
+                        
+                        tempSplittedString = currentLine.split(":");
+                        
+                        switch (tempSplittedString[0]) {
+                            case "q": // it's a question sentence
+                                tempQuestion.setSentence(tempSplittedString[1]);
+                                break;
+                            case "a": // it's a possible answer 
+                                tempPossibleAnswers[TPAPosition++] = tempSplittedString[1];
+                                break;
+                            case "c": //it's the correct answer
+                                tempQuestion.setCorrectAnswer(tempSplittedString[1]);
+                                break;
+                            case "i": //it's the image name
+                                tempQuestion.setImageName(tempSplittedString[1]);
                                 flag = false; // last line of question block in file, turn flag to false
                                 break;
                             default:
