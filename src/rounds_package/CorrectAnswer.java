@@ -31,6 +31,11 @@ public class CorrectAnswer extends Round{
     public void printRoundType() {
         System.out.println("Σωστή Απάντηση - Για κάθε σωστή απάντηση παίρνετε 1000 πόντους.\n");
     }
+    
+    @Override
+    public String getRoundType() {
+        return "Correct Answer";
+    }
      /**
      * CorrectAnswer method that evaluates the number of points to be returned, based on the question's answer
      * @param q The question 

@@ -69,6 +69,12 @@ public class Round {
         System.out.println("Round object");// doesn't matter
     }
     /**
+     * Method that prints the round type
+     */
+    public String getRoundType() {
+        return null;
+    }
+    /**
      * Round method that evaluates the number of points to be returned, based on the question's answer
      * @param q The question 
      * @return An integer value (represents user's points)

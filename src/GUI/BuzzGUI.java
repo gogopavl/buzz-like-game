@@ -5,17 +5,28 @@
  */
 package GUI;
 
+import game_package.Game;
+import game_package.Player;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import questions_package.Question;
+import rounds_package.Round;
+
 /**
  *
  * @author gogopavl
  */
 public class BuzzGUI extends javax.swing.JFrame {
+    
+    private static Game buzzGame;
 
     /**
      * Creates new form BuzzGUI
      */
     public BuzzGUI() {
         initComponents();
+        buzzGame = new Game(); // create instance
+        this.label_NumberOfRounds.setText("Insert # of rounds (1-"+buzzGame.getMaxNumberOfRounds()+"):");
     }
 
     /**
@@ -27,6 +38,7 @@ public class BuzzGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup_SinglePlayer = new javax.swing.ButtonGroup();
         Menu = new javax.swing.JPanel();
         button_NewGame = new javax.swing.JButton();
         button_Exit = new javax.swing.JButton();
@@ -41,6 +53,8 @@ public class BuzzGUI extends javax.swing.JFrame {
         textField_SingleName = new javax.swing.JTextField();
         button_SinglePlay = new javax.swing.JButton();
         button_SinglePlay_Back = new javax.swing.JButton();
+        label_NumberOfRounds = new javax.swing.JLabel();
+        textField_NumberOfRounds = new javax.swing.JTextField();
         MultiPlayerNames = new javax.swing.JPanel();
         label_MultiName1 = new javax.swing.JLabel();
         label_MultiName2 = new javax.swing.JLabel();
@@ -48,6 +62,15 @@ public class BuzzGUI extends javax.swing.JFrame {
         textField_MultiName2 = new javax.swing.JTextField();
         button_MultiPlay = new javax.swing.JButton();
         button_MultiPlay_Back = new javax.swing.JButton();
+        SinglePlayerGame = new javax.swing.JPanel();
+        label_RoundType = new javax.swing.JLabel();
+        label_ImageContainer = new javax.swing.JLabel();
+        label_QuestionSentence = new javax.swing.JLabel();
+        radioButton_First = new javax.swing.JRadioButton();
+        radioButton_Second = new javax.swing.JRadioButton();
+        radioButton_Third = new javax.swing.JRadioButton();
+        radioButton_Fourth = new javax.swing.JRadioButton();
+        button_SinglePlayerSubmit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.CardLayout());
@@ -92,7 +115,7 @@ public class BuzzGUI extends javax.swing.JFrame {
         MenuLayout.setVerticalGroup(
             MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MenuLayout.createSequentialGroup()
-                .addContainerGap(150, Short.MAX_VALUE)
+                .addContainerGap(267, Short.MAX_VALUE)
                 .addComponent(label_Welcome, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addComponent(button_NewGame, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -154,7 +177,7 @@ public class BuzzGUI extends javax.swing.JFrame {
                 .addComponent(button_Proceed, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(button_NewGame_Back, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(163, Short.MAX_VALUE))
         );
 
         getContentPane().add(NewGame, "panel_NewGame");
@@ -180,23 +203,35 @@ public class BuzzGUI extends javax.swing.JFrame {
             }
         });
 
+        label_NumberOfRounds.setFont(new java.awt.Font("Courier New", 1, 36)); // NOI18N
+        label_NumberOfRounds.setForeground(new java.awt.Color(255, 255, 255));
+        label_NumberOfRounds.setText("Insert # of rounds:");
+
         javax.swing.GroupLayout SinglePlayerNameLayout = new javax.swing.GroupLayout(SinglePlayerName);
         SinglePlayerName.setLayout(SinglePlayerNameLayout);
         SinglePlayerNameLayout.setHorizontalGroup(
             SinglePlayerNameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SinglePlayerNameLayout.createSequentialGroup()
+                .addGap(151, 151, 151)
+                .addComponent(textField_NumberOfRounds, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SinglePlayerNameLayout.createSequentialGroup()
-                .addGroup(SinglePlayerNameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(0, 76, Short.MAX_VALUE)
+                .addGroup(SinglePlayerNameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(SinglePlayerNameLayout.createSequentialGroup()
-                        .addGap(67, 67, 67)
                         .addComponent(button_SinglePlay, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(button_SinglePlay_Back, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(SinglePlayerNameLayout.createSequentialGroup()
-                        .addGap(0, 149, Short.MAX_VALUE)
-                        .addGroup(SinglePlayerNameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textField_SingleName, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_SingleName, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(96, 96, 96))
+                        .addGap(101, 101, 101)
+                        .addComponent(button_SinglePlay_Back, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(68, 68, 68))
+                    .addGroup(SinglePlayerNameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SinglePlayerNameLayout.createSequentialGroup()
+                            .addGroup(SinglePlayerNameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(textField_SingleName, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(label_SingleName, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(96, 96, 96))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SinglePlayerNameLayout.createSequentialGroup()
+                            .addComponent(label_NumberOfRounds, javax.swing.GroupLayout.PREFERRED_SIZE, 566, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(33, 33, 33)))))
         );
         SinglePlayerNameLayout.setVerticalGroup(
             SinglePlayerNameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -205,11 +240,15 @@ public class BuzzGUI extends javax.swing.JFrame {
                 .addComponent(label_SingleName)
                 .addGap(35, 35, 35)
                 .addComponent(textField_SingleName, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(58, 58, 58)
+                .addGap(42, 42, 42)
+                .addComponent(label_NumberOfRounds)
+                .addGap(34, 34, 34)
+                .addComponent(textField_NumberOfRounds, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                 .addGroup(SinglePlayerNameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(button_SinglePlay, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_SinglePlay_Back, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(108, Short.MAX_VALUE))
+                .addGap(48, 48, 48))
         );
 
         getContentPane().add(SinglePlayerName, "panel_SinglePlayerName");
@@ -257,10 +296,11 @@ public class BuzzGUI extends javax.swing.JFrame {
                             .addComponent(label_MultiName1, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(130, 130, 130))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MultiPlayerNamesLayout.createSequentialGroup()
-                        .addGroup(MultiPlayerNamesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textField_MultiName2, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textField_MultiName1, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(163, 163, 163))))
+                        .addComponent(textField_MultiName2, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(163, 163, 163))
+                    .addGroup(MultiPlayerNamesLayout.createSequentialGroup()
+                        .addComponent(textField_MultiName1, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(57, 57, 57))))
         );
         MultiPlayerNamesLayout.setVerticalGroup(
             MultiPlayerNamesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -277,10 +317,103 @@ public class BuzzGUI extends javax.swing.JFrame {
                 .addGroup(MultiPlayerNamesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(button_MultiPlay, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_MultiPlay_Back, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(170, Short.MAX_VALUE))
         );
 
         getContentPane().add(MultiPlayerNames, "panel_MultiPlayerNames");
+
+        SinglePlayerGame.setBackground(new java.awt.Color(0, 153, 153));
+
+        label_RoundType.setFont(new java.awt.Font("Courier New", 1, 36)); // NOI18N
+        label_RoundType.setForeground(new java.awt.Color(255, 255, 255));
+        label_RoundType.setText("Είδος γύρου");
+
+        label_QuestionSentence.setFont(new java.awt.Font("Courier New", 1, 36)); // NOI18N
+        label_QuestionSentence.setForeground(new java.awt.Color(255, 255, 255));
+        label_QuestionSentence.setText("question sentence");
+
+        radioButton_First.setBackground(new java.awt.Color(0, 153, 153));
+        buttonGroup_SinglePlayer.add(radioButton_First);
+        radioButton_First.setFont(new java.awt.Font("Courier New", 0, 14)); // NOI18N
+        radioButton_First.setForeground(new java.awt.Color(255, 255, 255));
+        radioButton_First.setText("answer 1");
+
+        radioButton_Second.setBackground(new java.awt.Color(0, 153, 153));
+        buttonGroup_SinglePlayer.add(radioButton_Second);
+        radioButton_Second.setFont(new java.awt.Font("Courier New", 0, 14)); // NOI18N
+        radioButton_Second.setForeground(new java.awt.Color(255, 255, 255));
+        radioButton_Second.setText("answer 2");
+
+        radioButton_Third.setBackground(new java.awt.Color(0, 153, 153));
+        buttonGroup_SinglePlayer.add(radioButton_Third);
+        radioButton_Third.setFont(new java.awt.Font("Courier New", 0, 14)); // NOI18N
+        radioButton_Third.setForeground(new java.awt.Color(255, 255, 255));
+        radioButton_Third.setText("answer 3");
+
+        radioButton_Fourth.setBackground(new java.awt.Color(0, 153, 153));
+        buttonGroup_SinglePlayer.add(radioButton_Fourth);
+        radioButton_Fourth.setFont(new java.awt.Font("Courier New", 0, 14)); // NOI18N
+        radioButton_Fourth.setForeground(new java.awt.Color(255, 255, 255));
+        radioButton_Fourth.setText("answer 4");
+
+        button_SinglePlayerSubmit.setText("Submit");
+        button_SinglePlayerSubmit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_SinglePlayerSubmitActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout SinglePlayerGameLayout = new javax.swing.GroupLayout(SinglePlayerGame);
+        SinglePlayerGame.setLayout(SinglePlayerGameLayout);
+        SinglePlayerGameLayout.setHorizontalGroup(
+            SinglePlayerGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SinglePlayerGameLayout.createSequentialGroup()
+                .addContainerGap(132, Short.MAX_VALUE)
+                .addGroup(SinglePlayerGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SinglePlayerGameLayout.createSequentialGroup()
+                        .addComponent(button_SinglePlayerSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(226, 226, 226))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SinglePlayerGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(SinglePlayerGameLayout.createSequentialGroup()
+                            .addGap(10, 10, 10)
+                            .addGroup(SinglePlayerGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(radioButton_First, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(radioButton_Second, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(radioButton_Third, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(radioButton_Fourth, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(SinglePlayerGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SinglePlayerGameLayout.createSequentialGroup()
+                                .addGroup(SinglePlayerGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(label_ImageContainer)
+                                    .addComponent(label_RoundType, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(52, 52, 52))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SinglePlayerGameLayout.createSequentialGroup()
+                                .addComponent(label_QuestionSentence, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(113, 113, 113))))))
+        );
+        SinglePlayerGameLayout.setVerticalGroup(
+            SinglePlayerGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SinglePlayerGameLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(label_RoundType)
+                .addGap(18, 18, 18)
+                .addComponent(label_ImageContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(label_QuestionSentence)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(radioButton_First)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(radioButton_Second)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(radioButton_Third)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(radioButton_Fourth)
+                .addGap(18, 18, 18)
+                .addComponent(button_SinglePlayerSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(87, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(SinglePlayerGame, "panel_SinglePlayerGame");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -301,11 +434,14 @@ public class BuzzGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(comboBox_NumberOfPlayers.getSelectedIndex() == 0){
             this.SinglePlayerName.setVisible(true);
-            this.NewGame.setVisible(false);            
+            this.NewGame.setVisible(false);
+            buzzGame.setNumberOfPlayers(1);
         }
         else if(comboBox_NumberOfPlayers.getSelectedIndex() == 1){
             this.MultiPlayerNames.setVisible(true);
-            this.NewGame.setVisible(false);        
+            this.NewGame.setVisible(false);
+            buzzGame.setNumberOfPlayers(2);
+            
         }
     }//GEN-LAST:event_button_ProceedActionPerformed
 
@@ -320,7 +456,40 @@ public class BuzzGUI extends javax.swing.JFrame {
     private void button_SinglePlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_SinglePlayActionPerformed
         // TODO add your handling code here:
         String playerName = this.textField_SingleName.getText();
-        this.label_SingleName.setText(playerName);
+        Player p = new Player(playerName, 0);
+        buzzGame.addPlayer(p);
+        int numberOfRounds = Integer.parseInt(this.textField_NumberOfRounds.getText());
+        if(!Game.validateInput(String.valueOf(numberOfRounds), buzzGame.getMaxNumberOfRounds())){
+            JOptionPane.showMessageDialog(rootPane, "Please insert a valid number of rounds!");
+        }
+        else{
+            buzzGame.setNumberOfRounds(numberOfRounds); // should not be here!        
+            buzzGame.gameSetup();
+            
+            ArrayList<Question> localQuestionList;  
+            
+            for(Round currentRound : buzzGame.getRounds()){
+            
+//            System.out.println("\n--------------------Γύρος " + roundNumber++ +"--------------------");
+                this.label_RoundType.setText(currentRound.getRoundType());
+            
+                localQuestionList = currentRound.getRoundQuestions();
+            
+                for(Question currentQuestion : localQuestionList){
+
+
+                    //***** THELEI ALLAGES, DEN PAIZEI
+                    buzzGame.getPlayers().get(0).addPoints(currentRound.evaluateAnwser(currentQuestion));
+
+                }
+        }
+            
+            this.SinglePlayerGame.setVisible(true);
+            this.SinglePlayerName.setVisible(false);
+        }
+        
+        
+        //this.label_SingleName.setText(playerName);
         
     }//GEN-LAST:event_button_SinglePlayActionPerformed
 
@@ -341,6 +510,10 @@ public class BuzzGUI extends javax.swing.JFrame {
         this.NewGame.setVisible(true);
         this.MultiPlayerNames.setVisible(false);
     }//GEN-LAST:event_button_MultiPlay_BackActionPerformed
+
+    private void button_SinglePlayerSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_SinglePlayerSubmitActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_button_SinglePlayerSubmitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -381,7 +554,9 @@ public class BuzzGUI extends javax.swing.JFrame {
     private javax.swing.JPanel Menu;
     private javax.swing.JPanel MultiPlayerNames;
     private javax.swing.JPanel NewGame;
+    private javax.swing.JPanel SinglePlayerGame;
     private javax.swing.JPanel SinglePlayerName;
+    private javax.swing.ButtonGroup buttonGroup_SinglePlayer;
     private javax.swing.JButton button_Exit;
     private javax.swing.JButton button_MultiPlay;
     private javax.swing.JButton button_MultiPlay_Back;
@@ -390,14 +565,24 @@ public class BuzzGUI extends javax.swing.JFrame {
     private javax.swing.JButton button_Proceed;
     private javax.swing.JButton button_SinglePlay;
     private javax.swing.JButton button_SinglePlay_Back;
+    private javax.swing.JButton button_SinglePlayerSubmit;
     private javax.swing.JComboBox<String> comboBox_NumberOfPlayers;
+    private javax.swing.JLabel label_ImageContainer;
     private javax.swing.JLabel label_MultiName1;
     private javax.swing.JLabel label_MultiName2;
     private javax.swing.JLabel label_NumberOfPlayers;
+    private javax.swing.JLabel label_NumberOfRounds;
+    private javax.swing.JLabel label_QuestionSentence;
+    private javax.swing.JLabel label_RoundType;
     private javax.swing.JLabel label_SingleName;
     private javax.swing.JLabel label_Welcome;
+    private javax.swing.JRadioButton radioButton_First;
+    private javax.swing.JRadioButton radioButton_Fourth;
+    private javax.swing.JRadioButton radioButton_Second;
+    private javax.swing.JRadioButton radioButton_Third;
     private javax.swing.JTextField textField_MultiName1;
     private javax.swing.JTextField textField_MultiName2;
+    private javax.swing.JTextField textField_NumberOfRounds;
     private javax.swing.JTextField textField_SingleName;
     // End of variables declaration//GEN-END:variables
 }

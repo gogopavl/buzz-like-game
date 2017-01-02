@@ -30,6 +30,11 @@ public class Bet extends Round{
     public void printRoundType() {
         System.out.println("Ποντάρισμα - Για κάθε σωστή απάντηση κερδίζετε τους πόντους που ποντάρατε, αλλιώς τους χάνετε.\n");
     }
+    @Override
+    public String getRoundType(){
+        return "Bet";
+    }
+    
      /**
      * Bet method that evaluates the number of points to be returned, based on the question's answer
      * @param q The question 
