@@ -248,7 +248,7 @@ public class Game {
             Boolean flag = true; // variable to separate each question's data block
             String questionType = filename.split(Pattern.quote("."))[0]; // variable used to fill the "type" field of a question object
 
-            br = new BufferedReader(new FileReader(filename));
+            br = new BufferedReader(new FileReader("questions/"+filename));
             
             while ((currentLine = br.readLine()) != null) {
                 if(currentLine.equals("#")){ // new question block
