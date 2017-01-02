@@ -1,0 +1,80 @@
+#
+q:Who is the person in the picture?
+a:Jack Nicholson
+a:Ralph Fiennes
+a:Al Pacino
+a:Robert De Niro
+c:Jack Nicholson
+i:JackNicholson.jpg
+#
+q:Who is the person in the picture?
+a:Robert De Niro
+a:Ralph Fiennes
+a:Daniel Day-Lewis
+a:Jack Nicholson
+c:Ralph Fiennes
+i:RalphFiennes.jpg
+#
+q:Who is the person in the picture?
+a:Brad Pitt
+a:Anthony Hopkins
+a:Robert De Niro
+a:Marlon Brando
+c:Robert De Niro
+i:RobertDeNiro.jpg
+#
+q:Who is the person in the picture?
+a:Al Pacino
+a:Daniel Day-Lewis
+a:Ralph Fiennes
+a:Brad Pitt
+c:Al Pacino
+i:AlPacino.jpg
+#
+q:Who is the person in the picture?
+a:Anthony Hopkins
+a:Jack Nicholson
+a:Jeremy Irons
+a:Marlon Brando
+c:Anthony Hopkins
+i:AnthonyHopkins.jpg
+#
+q:Who is the person in the picture?
+a:Natalie Portman
+a:Liv Tyler
+a:Keira Knightley
+a:Christina Hendricks
+c:Natalie Portman
+i:NataliePortman.jpg
+#
+q:Who is the person in the picture?
+a:Keira Knightley
+a:Charlize Theron
+a:Sarah Shahi
+a:Lizzy Caplan
+c:Keira Knightley
+i:KeiraKnightley.jpg
+#
+q:Who is the person in the picture?
+a:Liv Tyler
+a:Christina Hendricks
+a:Charlize Theron
+a:Ana de la Reguera
+c:Liv Tyler
+i:LivTyler.jpg
+#
+q:Who is the person in the picture?
+a:Christina Hendricks
+a:Sarah Shahi
+a:Lizzy Caplan
+a:Scarlett Johansson
+c:Christina Hendricks
+i:ChristinaHendricks.jpg
+#
+q:Who is the person in the picture?
+a:Scarlett Johansson
+a:Rebecca Ferguson
+a:Sarah Shahi
+a:Lizzy Caplan
+c:Scarlett Johansson
+i:ScarlettJohansson.jpg

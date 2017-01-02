@@ -1,0 +1,80 @@
+#
+q:Who is the person in the picture?
+a:Adam Levine
+a:Anthony Kiedis
+a:Bryan Adams
+a:Chris Martin
+c:Adam Levine
+i:AdamLevine.jpg
+#
+q:Who is the person in the picture?
+a:Aaron Neville
+a:Bryan Adams
+a:Andrea Bocelli
+a:Aaron Carter
+c:Bryan Adams
+i:BryanAdams.jpg
+#
+q:Who is the person in the picture?
+a:Bruno Mars
+a:Chris Martin
+a:Adam Levine
+a:Axl Rose
+c:Bruno Mars
+i:BrunoMars.jpg
+#
+q:Who is the person in the picture?
+a:Chris Martin
+a:Bruno Mars
+a:Adam Levine
+a:Aaron Carter
+c:Chris Martin
+i:ChrisMartin.jpg
+#
+q:Who is the person in the picture?
+a:Axl Rose
+a:Anthony Kiedis
+a:Chris Martin
+a:Andrea Bocelli
+c:Axl Rose
+i:AxlRose.jpg
+#
+q:Who is the person in the picture?
+a:Barbra Streisand
+a:Avril Lavigne
+a:Beyonce
+a:Bette Midler
+c:Avril Lavigne
+i:AvrilLavigne.jpg
+#
+q:Who is the person in the picture?
+a:Anastacia
+a:Britney Spears
+a:Avril Lavigne
+a:Bette Midler
+c:Anastacia
+i:Anastacia.jpg
+#
+q:Who is the person in the picture?
+a:Amy Lee
+a:Anastacia
+a:Alicia Keys
+a:Avril Lavigne
+c:Amy Lee
+i:AmyLee.jpg
+#
+q:Who is the person in the picture?
+a:Alanis Morisette
+a:Amy Lee
+a:Adele
+a:Alicia Keys
+c:Alanis Morisette
+i:AlanisMorisette.jpg
+#
+q:Who is the person in the picture?
+a:Adele
+a:Barbra Streisand
+a:Avril Lavigne
+a:Anastacia
+c:Adele
+i:Adele.jpg
