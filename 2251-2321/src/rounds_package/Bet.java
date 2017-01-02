@@ -36,7 +36,7 @@ public class Bet extends Round{
      * @return An integer value (represents user's points)
      */
     @Override
-    public int evaluateAnwser(Question q){  
+    public int evaluateAnwser(Question q){
         
         String betInput, userInput;
            
