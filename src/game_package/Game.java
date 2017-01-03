@@ -237,8 +237,6 @@ public class Game {
         readQuestionsFromFile("Science.txt");
         readImageQuestionsFromFile("Cinema.txt");
         readImageQuestionsFromFile("Music.txt");
-        
-        
     }
     /**
      * Method that reads a given file containing a question, its possible answers and the correct answer.
@@ -288,7 +286,6 @@ public class Game {
                     tempQuestion.setPossibleAnswers(tempPossibleAnswers);
                     TPAPosition = 0;  
                     flag = true;
-                    
                     allQuestions.add(tempQuestion);
                 }
             }

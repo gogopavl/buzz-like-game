@@ -6,19 +6,28 @@
 package questions_package;
 
 /**
- *
+ *  Class implementing a question with an image attachment
+ * @author desppapa
  * @author gogopavl
  */
 public class ImageQuestion extends Question{
     
     private String imageName;
-    
+    /**
+     * Constructor
+     * @param t the question type
+     * @param s the question sentence
+     * @param pA an array with all the possible answers (will be shuffled)
+     * @param cA the correct answer
+     * @param i the image file name
+     */
     public ImageQuestion(String t, String s, String[] pA, String cA, String i) {
         super(t, s, pA, cA);
         imageName = i;
-        
     }
-
+    /**
+     * empty constructor
+     */
     public ImageQuestion() {
     }
     /**
