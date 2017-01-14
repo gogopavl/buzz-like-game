@@ -42,17 +42,17 @@ public class CorrectAnswer extends Round{
      * @return An integer value (represents user's points)
      */
     @Override
-    public int evaluateAnwser(Question q){
-        String userInput;
+    public int evaluateAnwser(Question q, int userInput){
+        String usrIn;
        
-        q.displayQuestion();
+//        q.displayQuestion();
        
-        System.out.print("Για να απαντήσετε πιέστε από 1-4: ");
-        do{
-            userInput = answerInput.nextLine();
-        }while(!Game.validateInput(userInput, 4));
-        
-        if(q.checkAnswer(Integer.parseInt(userInput))){
+//        System.out.print("Για να απαντήσετε πιέστε από 1-4: ");
+//        do{
+//            usrIn = answerInput.nextLine();
+//        }while(!Game.validateInput(usrIn, 4));
+
+        if(q.checkAnswer(userInput)){
             return 1000;
         }
         else {

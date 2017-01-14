@@ -773,6 +773,15 @@ public class BuzzGUI extends javax.swing.JFrame {
         else if(this.radioButton_Fourth.isSelected()){
             userInput = 4;
         }
+        int temp = 0;
+        Question q = questionsList.get(questionCounter);
+        if(roundsList.get(roundCounter).getRoundType().equals("Bet")){
+            temp = roundsList.get(roundCounter).evaluateAnwser(q, userInput)*betTempInput;
+        }else{
+            temp = roundsList.get(roundCounter).evaluateAnwser(q, userInput);
+        }
+        System.out.println("points: " + temp);
+        
         this.buttonGroup_SinglePlayer.clearSelection();
         questionCounter++;
         setQuestionLabels();

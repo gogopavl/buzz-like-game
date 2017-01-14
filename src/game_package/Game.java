@@ -199,7 +199,7 @@ public class Game {
             
             for(Question currentQuestion : localQuestionList){
                 
-                listOfPlayers.get(0).addPoints(currentRound.evaluateAnwser(currentQuestion));
+//                listOfPlayers.get(0).addPoints(currentRound.evaluateAnwser(currentQuestion, 0));
                 
             }
         }

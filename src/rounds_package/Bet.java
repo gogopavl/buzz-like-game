@@ -41,47 +41,47 @@ public class Bet extends Round{
      * @return An integer value (represents user's points)
      */
     @Override
-    public int evaluateAnwser(Question q){  
+    public int evaluateAnwser(Question q, int userInput){  
         
-        String betInput, userInput;
+        String betInput, usrIn;
            
-        System.out.println("\nΟ τύπος της κατηγορίας είναι: " + q.getType() + "\n");
-        System.out.print("Για να ποντάρετε 250, 500, 750 ή 1000 πόντους, πιέστε αντίστοιχα 1, 2, 3, 4: ");
-        do{
-            betInput = answerInput.nextLine();
-        }while(!Game.validateInput(betInput, 4));
-        int integerBetInput = Integer.parseInt(betInput);
+//        System.out.println("\nΟ τύπος της κατηγορίας είναι: " + q.getType() + "\n");
+//        System.out.print("Για να ποντάρετε 250, 500, 750 ή 1000 πόντους, πιέστε αντίστοιχα 1, 2, 3, 4: ");
+//        do{
+//            betInput = answerInput.nextLine();
+//        }while(!Game.validateInput(betInput, 4));
+//        int integerBetInput = Integer.parseInt(betInput);
+//        
+//        q.displayQuestion();
+//       
+//        System.out.print("Για να απαντήσετε πιέστε από 1-4: ");
+//        do{
+//            usrIn = answerInput.nextLine();
+//        }while(!Game.validateInput(usrIn, 4));
         
-        q.displayQuestion();
-       
-        System.out.print("Για να απαντήσετε πιέστε από 1-4: ");
-        do{
-            userInput = answerInput.nextLine();
-        }while(!Game.validateInput(userInput, 4));
         
+//        switch(integerBetInput){
+//            case 1: 
+//                integerBetInput = 250;
+//                break;
+//            case 2: 
+//                integerBetInput = 500;
+//                break;
+//            case 3: 
+//                integerBetInput = 750;
+//                break;
+//            case 4: 
+//                integerBetInput = 1000;
+//                break;
+//            default: 
+//                break;
+//        }
         
-        switch(integerBetInput){
-            case 1: 
-                integerBetInput = 250;
-                break;
-            case 2: 
-                integerBetInput = 500;
-                break;
-            case 3: 
-                integerBetInput = 750;
-                break;
-            case 4: 
-                integerBetInput = 1000;
-                break;
-            default: 
-                break;
-        }
-        
-        if(q.checkAnswer(Integer.parseInt(userInput))){
-            return integerBetInput;
+        if(q.checkAnswer(userInput)){
+            return 1;
         }
         else {
-            return -integerBetInput;
+            return -1;
         }
 
     }

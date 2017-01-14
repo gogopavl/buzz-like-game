@@ -79,7 +79,7 @@ public class Round {
      * @param q The question 
      * @return An integer value (represents user's points)
      */
-    public int evaluateAnwser(Question q){
+    public int evaluateAnwser(Question q, int userInput){
         return 0; // doesn't matter
     }
 
