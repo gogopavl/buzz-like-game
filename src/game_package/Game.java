@@ -14,6 +14,7 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 import questions_package.ImageQuestion;
 import questions_package.Question;
+import rounds_package.StopTimer;
 
 /**
  * Class that represents a buzz game. Contains functions needed to implement the basic logic, to load the game questions and to validate the user's input
@@ -24,7 +25,7 @@ public class Game {
     
     private static BufferedReader br = null;
     
-    private final static int NUMBER_OF_ROUND_TYPES = 2; // Bet and CorrectAnswer
+    private final static int NUMBER_OF_ROUND_TYPES = 3; // Bet and CorrectAnswer
     private final static int NUMBER_OF_QUESTIONS_PER_ROUND = 5; // We thought five was a good number of questions per round
     
     private int numberOfRounds;
@@ -173,6 +174,15 @@ public class Game {
                    rounds.add(new Bet(NUMBER_OF_QUESTIONS_PER_ROUND , tempQuestionList));
                    
                    break;
+               case 2: 
+                    // add NUMBER_OF_QUESTIONS_PER_ROUND to round object and remove them from allQuestions list
+                    for(int j = 0 ; j < NUMBER_OF_QUESTIONS_PER_ROUND ; ++j){
+                        tempQuestionList.add(questionsIterator.next());
+                        questionsIterator.remove();
+                    }
+                    rounds.add(new StopTimer(NUMBER_OF_QUESTIONS_PER_ROUND , tempQuestionList));
+
+                    break;
                default: 
                    //system error
                    break;

@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import questions_package.Question;
 import questions_package.ImageQuestion;
 import rounds_package.Round;
+import rounds_package.StopTimer;
 
 /**
  * Class implementing the graphical user interface of the application
@@ -32,6 +33,8 @@ public class BuzzGUI extends javax.swing.JFrame {
     private ArrayList<Question> questionsList;
     private HashSet<String> imageQuestionTypes = new HashSet<String>();
     private int betTempInput = 0;
+    private long millisStart;
+    private long millisEnd;
     
 
     /**
@@ -55,7 +58,8 @@ public class BuzzGUI extends javax.swing.JFrame {
     public void setQuestionLabels(){        
         if(questionCounter == QUESTIONS_PER_ROUND){ // question counter reaches limit
             roundCounter ++; // next round
-            if(roundCounter == NUMBER_OF_ROUNDS){ // round counter reaches limit                
+            if(roundCounter == NUMBER_OF_ROUNDS){ // round counter reaches limit 
+               this.label_Score.setText("You scored " + String.valueOf(buzzGame.getPlayers().get(0).getPoints()) + " points!");
                this.EndOfGame.setVisible(true); // display end of game panel
                this.SinglePlayerGame.setVisible(false); 
                roundCounter = 0; // reset counters
@@ -105,6 +109,13 @@ public class BuzzGUI extends javax.swing.JFrame {
             this.radioButton_Fourth.setText(currentQuestion.getPossibleAnswers()[3]);
         
         }
+        if("Stop Timer".equals(roundsList.get(roundCounter).getRoundType())){
+                this.label_RoundType.setText(roundsList.get(roundCounter).getRoundType()+" 5 secs left!");
+                this.SinglePlayerGame.setVisible(true);
+                millisStart = System.currentTimeMillis();
+                millisEnd = System.currentTimeMillis() + 5000;
+                this.SinglePlayerGame.setVisible(true);
+         }
         
     }
 
@@ -710,6 +721,9 @@ public class BuzzGUI extends javax.swing.JFrame {
         String player2Name = this.textField_MultiName2.getText();
         this.label_MultiName2.setText(player2Name);
         
+        buzzGame.addPlayer(new Player(player1Name, 0));
+        buzzGame.addPlayer(new Player(player2Name, 0));
+        
         int numberOfRounds = Integer.parseInt(this.textField_Multi_NumberOfRounds.getText());
         
         if(!Game.validateInput(String.valueOf(numberOfRounds), buzzGame.getMaxNumberOfRounds())){
@@ -718,6 +732,9 @@ public class BuzzGUI extends javax.swing.JFrame {
         else{
             buzzGame.setNumberOfRounds(numberOfRounds);
             NUMBER_OF_ROUNDS = buzzGame.getNumberOfRounds();
+            buzzGame.gameSetup();
+            roundsList = buzzGame.getRounds();
+            questionsList = roundsList.get(roundCounter).getRoundQuestions();
         }
     }//GEN-LAST:event_button_MultiPlayActionPerformed
 
@@ -758,8 +775,6 @@ public class BuzzGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_button_MultiPlay_BackActionPerformed
 
     private void button_SinglePlayerSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_SinglePlayerSubmitActionPerformed
-        //evaluate answer!!!
-        System.out.println("correct is: "+ questionsList.get(questionCounter).getCorrectAnswer());
         int userInput = 0;
         if(this.radioButton_First.isSelected()){
             userInput = 1;
@@ -775,10 +790,26 @@ public class BuzzGUI extends javax.swing.JFrame {
         }
         int temp = 0;
         Question q = questionsList.get(questionCounter);
+        
         if(roundsList.get(roundCounter).getRoundType().equals("Bet")){
             temp = roundsList.get(roundCounter).evaluateAnwser(q, userInput)*betTempInput;
-        }else{
+            buzzGame.getPlayers().get(0).addPoints(temp);
+        }
+        else if(roundsList.get(roundCounter).getRoundType().equals("Stop Timer")){
+            if(System.currentTimeMillis() < millisEnd){  
+                StopTimer tempCurrentStopTimerRound;
+                tempCurrentStopTimerRound = (StopTimer) roundsList.get(roundCounter);
+                temp = tempCurrentStopTimerRound.evaluateAnwser(q, userInput, millisEnd - System.currentTimeMillis());
+                buzzGame.getPlayers().get(0).addPoints(temp);
+                System.out.println("points: "+ temp);
+            }
+            else{
+                JOptionPane.showMessageDialog(rootPane, "Time finished, cannot accept answer!");
+            }
+        }
+        else{
             temp = roundsList.get(roundCounter).evaluateAnwser(q, userInput);
+            buzzGame.getPlayers().get(0).addPoints(temp);
         }
         System.out.println("points: " + temp);
         
