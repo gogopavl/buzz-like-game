@@ -859,9 +859,6 @@ public class BuzzGUI extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 MultiPlayerGameKeyPressed(evt);
             }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                MultiPlayerGameKeyTyped(evt);
-            }
         });
 
         label_RoundTypeMulti.setFont(new java.awt.Font("Courier New", 1, 36)); // NOI18N
@@ -1082,7 +1079,9 @@ public class BuzzGUI extends javax.swing.JFrame {
             roundsList = buzzGame.getRounds();
             questionsList = roundsList.get(roundCounter).getRoundQuestions();
             setQuestionLabels2();
-            this.MultiPlayerNames.setVisible(false);            
+            this.MultiPlayerNames.setVisible(false);
+            this.MultiPlayerGame.requestFocus();
+            
         }
     }//GEN-LAST:event_button_MultiPlayActionPerformed
 
@@ -1302,7 +1301,7 @@ public class BuzzGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_MultiPlayerBetKeyPressed
 
     private void MultiPlayerGameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_MultiPlayerGameKeyPressed
-        System.out.println("called");
+        System.out.println("pressed "+ evt.getKeyChar());
         char tempKey = evt.getKeyChar();
         switch(tempKey){
             case 'q' :
@@ -1332,16 +1331,9 @@ public class BuzzGUI extends javax.swing.JFrame {
             default:
                 break;
             
-        }
-        System.out.println("p1 bet: " + player1BetInput + " p2 bet: " + player2BetInput);
-        
+        }        
         
     }//GEN-LAST:event_MultiPlayerGameKeyPressed
-
-    private void MultiPlayerGameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_MultiPlayerGameKeyTyped
-        // TODO add your handling code here:
-        System.out.println(evt.getKeyChar());
-    }//GEN-LAST:event_MultiPlayerGameKeyTyped
 
     /**
      * @param args the command line arguments
