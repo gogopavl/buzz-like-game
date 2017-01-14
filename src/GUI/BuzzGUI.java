@@ -1217,7 +1217,7 @@ public class BuzzGUI extends javax.swing.JFrame {
                 buzzGame.getPlayers().get(1).addPoints(temp2);
             }
         }
-        else if(roundsList.get(roundCounter).getRoundType().equals("Stop Timer")){ //display issues
+        else if(roundsList.get(roundCounter).getRoundType().equals("Stop Timer")){ 
             if(System.currentTimeMillis() < millisEnd){  
                 StopTimer tempCurrentStopTimerRound;
                 tempCurrentStopTimerRound = (StopTimer) roundsList.get(roundCounter);
