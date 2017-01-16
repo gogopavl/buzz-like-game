@@ -34,7 +34,7 @@ public class FileOperator {
     
     public static void writerFuncMulti(String name, int points, String name2, int points2) throws IOException{
         fw = new FileWriter("stats.txt", true);
-        fw.write("m," + name + "," + points + "," + name2 + "" + points2);
+        fw.write("m," + name + "," + points + "," + name2 + "," + points2);
         fw.write("\n");
         fw.close();
     }
@@ -53,16 +53,15 @@ public class FileOperator {
                     player = new Player(splittedLine[1],Integer.valueOf(splittedLine[2]));
                     singlePlayerScoresList.add(player);
                 }               
-//                    System.out.println("is s");                  
         } 
         return singlePlayerScoresList;
     }
     
-    public static ArrayList<Player> readerFunMulti() throws FileNotFoundException, IOException{
+    public static ArrayList<Matchup> readerFunMulti() throws FileNotFoundException, IOException{
         br = new BufferedReader(new FileReader("stats.txt"));
         String currentLine;
-        ArrayList<Player> multiPlayerScoresList;
-        multiPlayerScoresList = new ArrayList<>();
+        
+        ArrayList<Matchup> multiPlayerScoresList = new ArrayList<>();
         String[] splittedLine = new String[4];
         
         while ((currentLine = br.readLine()) != null) {
@@ -71,10 +70,9 @@ public class FileOperator {
                     Player player1 , player2;
                     player1 = new Player(splittedLine[1],Integer.valueOf(splittedLine[2]));
                     player2 = new Player(splittedLine[3],Integer.valueOf(splittedLine[4]));
-
-//                    multiPlayerScoresList.add(player);
+                    
+                    multiPlayerScoresList.add(new Matchup(player1, player2));
                 }               
-//                    System.out.println("is s");                  
         } 
         return multiPlayerScoresList;
     }

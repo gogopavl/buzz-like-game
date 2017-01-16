@@ -1,0 +1,13 @@
+s,example,-1750
+m,foo,3418,george,450
+s,user,1250
+m,guest,909,bill,1481
+s,bill,-1750
+m,guest,3418,joe,862
+s,guest,-150
+m,guest,1909,jorge,1481
+s,jorge,1050
+m,guestnara,3418,john,862
+s,guest,-500
+m,guest,550,johnson,-4500
+

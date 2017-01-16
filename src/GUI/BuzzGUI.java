@@ -5,13 +5,18 @@
  */
 package GUI;
 
+import file_operations.FileOperator;
+import file_operations.Matchup;
 import game_package.Game;
 import game_package.Player;
 import java.awt.Image;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import questions_package.Question;
@@ -62,11 +67,12 @@ public class BuzzGUI extends javax.swing.JFrame {
      * so that in case of a "Bet" round the users can bid
      * without seeing the question
      */
-    public void setQuestionLabels(){        
+    public void setQuestionLabels() throws IOException{        
         if(questionCounter == QUESTIONS_PER_ROUND){ // question counter reaches limit
             roundCounter ++; // next round
             if(roundCounter == NUMBER_OF_ROUNDS){ // round counter reaches limit 
                this.label_Score.setText(this.label_Score.getText() + String.valueOf(buzzGame.getPlayers().get(0).getPoints()));
+               FileOperator.writerFunc(buzzGame.getPlayers().get(0).getName(), buzzGame.getPlayers().get(0).getPoints());
                this.EndOfGame.setVisible(true); // display end of game panel
                this.SinglePlayerGame.setVisible(false); 
                roundCounter = 0; // reset counters
@@ -132,13 +138,14 @@ public class BuzzGUI extends javax.swing.JFrame {
      * so that in case of a "Bet" round the users can bid
      * without seeing the question
      */
-    public void setQuestionLabels2(){        
+    public void setQuestionLabels2() throws IOException{        
         if(questionCounter == QUESTIONS_PER_ROUND){ // question counter reaches limit
             roundCounter ++; // next round
             if(roundCounter == NUMBER_OF_ROUNDS){ // round counter reaches limit 
                Player p1 = buzzGame.getPlayers().get(0);
                Player p2 = buzzGame.getPlayers().get(1);
                this.label_ScoreMulti.setText(p1.getName()+": "+p1.getPoints()+", "+p2.getName()+": "+p2.getPoints());
+               FileOperator.writerFuncMulti(p1.getName(), p1.getPoints(), p2.getName(), p2.getPoints());
                this.EndOfGameMulti.setVisible(true); // display end of game panel
                this.MultiPlayerGame.setVisible(false); 
                roundCounter = 0; // reset counters
@@ -219,11 +226,18 @@ public class BuzzGUI extends javax.swing.JFrame {
         label_Welcome = new javax.swing.JLabel();
         button_GreekLanguage = new javax.swing.JButton();
         button_EnglishLanguage = new javax.swing.JButton();
+        button_Highscores = new javax.swing.JButton();
         NewGame = new javax.swing.JPanel();
         label_NumberOfPlayers = new javax.swing.JLabel();
         comboBox_NumberOfPlayers = new javax.swing.JComboBox<>();
         button_Proceed = new javax.swing.JButton();
         button_NewGame_Back = new javax.swing.JButton();
+        Highscores = new javax.swing.JPanel();
+        label_HighSingle = new javax.swing.JLabel();
+        button_Highscores_Back = new javax.swing.JButton();
+        label_HighMulti = new javax.swing.JLabel();
+        label_HighscoreMultiLabel = new javax.swing.JLabel();
+        label_HighscoreSingleLabel = new javax.swing.JLabel();
         SinglePlayerName = new javax.swing.JPanel();
         label_SingleName = new javax.swing.JLabel();
         textField_SingleName = new javax.swing.JTextField();
@@ -290,10 +304,6 @@ public class BuzzGUI extends javax.swing.JFrame {
         button_EndOfGame_Exit_Multi = new javax.swing.JButton();
         button_EndOfGame_Back_Multi = new javax.swing.JButton();
         label_EndMessage_Multi = new javax.swing.JLabel();
-        MenuBar = new javax.swing.JMenuBar();
-        Menu_File = new javax.swing.JMenu();
-        Menu_Highscores = new javax.swing.JMenuItem();
-        Menu_Exit = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(850, 700));
@@ -339,6 +349,14 @@ public class BuzzGUI extends javax.swing.JFrame {
             }
         });
 
+        button_Highscores.setText(bundle.getString("BuzzGUI.button_Highscores.text")); // NOI18N
+        button_Highscores.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        button_Highscores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_HighscoresActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout MenuLayout = new javax.swing.GroupLayout(Menu);
         Menu.setLayout(MenuLayout);
         MenuLayout.setHorizontalGroup(
@@ -347,7 +365,8 @@ public class BuzzGUI extends javax.swing.JFrame {
                 .addGap(212, 212, 212)
                 .addGroup(MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(button_NewGame, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
-                    .addComponent(button_Exit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(button_Exit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(button_Highscores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(228, 228, 228))
             .addGroup(MenuLayout.createSequentialGroup()
                 .addComponent(label_Welcome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -370,9 +389,11 @@ public class BuzzGUI extends javax.swing.JFrame {
                     .addComponent(button_EnglishLanguage, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(75, 75, 75)
                 .addComponent(button_NewGame, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button_Highscores, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(button_Exit, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(224, 224, 224))
+                .addGap(312, 312, 312))
         );
 
         MenuLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {button_EnglishLanguage, button_GreekLanguage});
@@ -428,17 +449,83 @@ public class BuzzGUI extends javax.swing.JFrame {
             NewGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(NewGameLayout.createSequentialGroup()
                 .addGap(158, 158, 158)
-                .addComponent(label_NumberOfPlayers, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
+                .addComponent(label_NumberOfPlayers, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(comboBox_NumberOfPlayers, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                .addComponent(comboBox_NumberOfPlayers, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(button_Proceed, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+                .addComponent(button_Proceed, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(button_NewGame_Back, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+                .addComponent(button_NewGame_Back, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
                 .addGap(180, 180, 180))
         );
 
         getContentPane().add(NewGame, "panel_NewGame");
+
+        Highscores.setBackground(new java.awt.Color(0, 153, 51));
+
+        label_HighSingle.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        label_HighSingle.setForeground(new java.awt.Color(255, 255, 255));
+        label_HighSingle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_HighSingle.setText(bundle.getString("BuzzGUI.label_HighSingle.text")); // NOI18N
+        label_HighSingle.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        button_Highscores_Back.setText(bundle.getString("BuzzGUI.button_Highscores_Back.text")); // NOI18N
+        button_Highscores_Back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_Highscores_BackActionPerformed(evt);
+            }
+        });
+
+        label_HighMulti.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        label_HighMulti.setForeground(new java.awt.Color(255, 255, 255));
+        label_HighMulti.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_HighMulti.setText(bundle.getString("BuzzGUI.label_HighMulti.text")); // NOI18N
+        label_HighMulti.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        label_HighscoreMultiLabel.setForeground(new java.awt.Color(255, 255, 255));
+        label_HighscoreMultiLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_HighscoreMultiLabel.setText(bundle.getString("BuzzGUI.label_HighscoreMultiLabel.text")); // NOI18N
+
+        label_HighscoreSingleLabel.setForeground(new java.awt.Color(255, 255, 255));
+        label_HighscoreSingleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_HighscoreSingleLabel.setText(bundle.getString("BuzzGUI.label_HighscoreSingleLabel.text")); // NOI18N
+
+        javax.swing.GroupLayout HighscoresLayout = new javax.swing.GroupLayout(Highscores);
+        Highscores.setLayout(HighscoresLayout);
+        HighscoresLayout.setHorizontalGroup(
+            HighscoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, HighscoresLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(button_Highscores_Back, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(292, 292, 292))
+            .addGroup(HighscoresLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(HighscoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(label_HighscoreSingleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(HighscoresLayout.createSequentialGroup()
+                        .addGroup(HighscoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(label_HighSingle, javax.swing.GroupLayout.DEFAULT_SIZE, 870, Short.MAX_VALUE)
+                            .addComponent(label_HighscoreMultiLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(label_HighMulti, javax.swing.GroupLayout.DEFAULT_SIZE, 870, Short.MAX_VALUE))
+                        .addContainerGap())))
+        );
+        HighscoresLayout.setVerticalGroup(
+            HighscoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(HighscoresLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(label_HighscoreSingleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(label_HighSingle, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addComponent(label_HighscoreMultiLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(label_HighMulti, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(button_Highscores_Back, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(201, 201, 201))
+        );
+
+        getContentPane().add(Highscores, "panel_Highscores");
 
         SinglePlayerName.setBackground(new java.awt.Color(255, 204, 51));
 
@@ -501,13 +588,13 @@ public class BuzzGUI extends javax.swing.JFrame {
             SinglePlayerNameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(SinglePlayerNameLayout.createSequentialGroup()
                 .addGap(67, 67, 67)
-                .addComponent(label_SingleName, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+                .addComponent(label_SingleName, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
                 .addGap(32, 32, 32)
-                .addComponent(textField_SingleName, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
+                .addComponent(textField_SingleName, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
                 .addGap(34, 34, 34)
-                .addComponent(label_NumberOfRounds, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                .addComponent(label_NumberOfRounds, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
                 .addGap(29, 29, 29)
-                .addComponent(textField_NumberOfRounds, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
+                .addComponent(textField_NumberOfRounds, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
                 .addGap(84, 84, 84)
                 .addGroup(SinglePlayerNameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(button_SinglePlay, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
@@ -584,15 +671,15 @@ public class BuzzGUI extends javax.swing.JFrame {
                 .addGap(40, 40, 40)
                 .addComponent(label_MultiName1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(textField_MultiName1, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+                .addComponent(textField_MultiName1, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
                 .addGap(29, 29, 29)
                 .addComponent(label_MultiName2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(textField_MultiName2, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+                .addComponent(textField_MultiName2, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(label_Multi_NumberOfRounds, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                .addComponent(label_Multi_NumberOfRounds, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(textField_Multi_NumberOfRounds, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+                .addComponent(textField_Multi_NumberOfRounds, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
                 .addGap(41, 41, 41)
                 .addGroup(MultiPlayerNamesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(button_MultiPlay, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
@@ -680,7 +767,7 @@ public class BuzzGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(radioButton_Bet1000, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(57, 57, 57)
-                .addComponent(button_SinglePlayerBet_Proceed, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+                .addComponent(button_SinglePlayerBet_Proceed, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
                 .addGap(135, 135, 135))
         );
 
@@ -761,11 +848,11 @@ public class BuzzGUI extends javax.swing.JFrame {
             SinglePlayerGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(SinglePlayerGameLayout.createSequentialGroup()
                 .addGap(58, 58, 58)
-                .addComponent(label_RoundType, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+                .addComponent(label_RoundType, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(label_ImageContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 235, Short.MAX_VALUE)
+                .addComponent(label_ImageContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 283, Short.MAX_VALUE)
                 .addGap(46, 46, 46)
-                .addComponent(label_QuestionSentence, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+                .addComponent(label_QuestionSentence, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(radioButton_First, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -775,7 +862,7 @@ public class BuzzGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(radioButton_Fourth, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(button_SinglePlayerSubmit, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
+                .addComponent(button_SinglePlayerSubmit, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
                 .addGap(31, 31, 31))
         );
 
@@ -899,7 +986,7 @@ public class BuzzGUI extends javax.swing.JFrame {
                     .addComponent(label_Bet5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(label_Bet8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(44, 44, 44)
-                .addComponent(button_MultiPlayerBet_Proceed, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+                .addComponent(button_MultiPlayerBet_Proceed, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
                 .addGap(135, 135, 135))
         );
 
@@ -1002,9 +1089,9 @@ public class BuzzGUI extends javax.swing.JFrame {
             MultiPlayerGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MultiPlayerGameLayout.createSequentialGroup()
                 .addGap(58, 58, 58)
-                .addComponent(label_RoundTypeMulti, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                .addComponent(label_RoundTypeMulti, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(label_ImageContainerMulti, javax.swing.GroupLayout.PREFERRED_SIZE, 235, Short.MAX_VALUE)
+                .addComponent(label_ImageContainerMulti, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(label_QuestionSentenceMulti, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1020,7 +1107,7 @@ public class BuzzGUI extends javax.swing.JFrame {
                     .addComponent(label_Player1Keys, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
                     .addComponent(label_Player2Keys, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
                 .addGap(14, 14, 14)
-                .addComponent(button_MultiPlayerSubmit, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
+                .addComponent(button_MultiPlayerSubmit, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1075,9 +1162,9 @@ public class BuzzGUI extends javax.swing.JFrame {
                 .addGap(40, 40, 40)
                 .addComponent(label_Score, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(56, 56, 56)
-                .addComponent(button_EndOfGame_Back, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
+                .addComponent(button_EndOfGame_Back, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
                 .addGap(31, 31, 31)
-                .addComponent(button_EndOfGame_Exit, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
+                .addComponent(button_EndOfGame_Exit, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
                 .addGap(123, 123, 123))
         );
 
@@ -1132,25 +1219,13 @@ public class BuzzGUI extends javax.swing.JFrame {
                 .addGap(40, 40, 40)
                 .addComponent(label_ScoreMulti, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(56, 56, 56)
-                .addComponent(button_EndOfGame_Back_Multi, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
+                .addComponent(button_EndOfGame_Back_Multi, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
                 .addGap(31, 31, 31)
-                .addComponent(button_EndOfGame_Exit_Multi, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
+                .addComponent(button_EndOfGame_Exit_Multi, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
                 .addGap(123, 123, 123))
         );
 
         getContentPane().add(EndOfGameMulti, "card7");
-
-        Menu_File.setText(bundle.getString("BuzzGUI.Menu_File.text")); // NOI18N
-
-        Menu_Highscores.setText(bundle.getString("BuzzGUI.Menu_Highscores.text")); // NOI18N
-        Menu_File.add(Menu_Highscores);
-
-        Menu_Exit.setText(bundle.getString("BuzzGUI.Menu_Exit.text")); // NOI18N
-        Menu_File.add(Menu_Exit);
-
-        MenuBar.add(Menu_File);
-
-        setJMenuBar(MenuBar);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -1200,33 +1275,15 @@ public class BuzzGUI extends javax.swing.JFrame {
             buzzGame.gameSetup();
             roundsList = buzzGame.getRounds();
             questionsList = roundsList.get(roundCounter).getRoundQuestions();
-            setQuestionLabels2();
+            try {
+                setQuestionLabels2();
+            } catch (IOException ex) {
+                Logger.getLogger(BuzzGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
             this.MultiPlayerNames.setVisible(false);
             this.MultiPlayerGame.requestFocus();
         }
     }//GEN-LAST:event_button_MultiPlayActionPerformed
-
-    private void button_SinglePlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_SinglePlayActionPerformed
-        String playerName = this.textField_SingleName.getText();
-        Player p = new Player(playerName, 0);
-        buzzGame.addPlayer(p);
-        
-        int numberOfRounds = Integer.parseInt(this.textField_NumberOfRounds.getText());
-        
-        if(!Game.validateInput(String.valueOf(numberOfRounds), buzzGame.getMaxNumberOfRounds())){
-            JOptionPane.showMessageDialog(rootPane, "Please insert a valid number of rounds!");
-        }
-        else{
-            buzzGame.setNumberOfRounds(numberOfRounds);
-            NUMBER_OF_ROUNDS = buzzGame.getNumberOfRounds();
-            buzzGame.gameSetup();
-            roundsList = buzzGame.getRounds();
-            questionsList = roundsList.get(roundCounter).getRoundQuestions();
-            setQuestionLabels();
-            this.SinglePlayerName.setVisible(false);
-            
-        }
-    }//GEN-LAST:event_button_SinglePlayActionPerformed
 
     private void button_NewGame_BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_NewGame_BackActionPerformed
         this.Menu.setVisible(true);
@@ -1284,7 +1341,11 @@ public class BuzzGUI extends javax.swing.JFrame {
         
         this.buttonGroup_SinglePlayer.clearSelection();
         questionCounter++;
-        setQuestionLabels();
+        try {
+            setQuestionLabels();
+        } catch (IOException ex) {
+            Logger.getLogger(BuzzGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_button_SinglePlayerSubmitActionPerformed
 
     private void button_EndOfGame_ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_EndOfGame_ExitActionPerformed
@@ -1370,7 +1431,11 @@ public class BuzzGUI extends javax.swing.JFrame {
         user1Input = user2Input = 0;
         player1BetInput = player2BetInput = 0;
         questionCounter++;
-        setQuestionLabels2();
+        try {
+            setQuestionLabels2();
+        } catch (IOException ex) {
+            Logger.getLogger(BuzzGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_button_MultiPlayerSubmitActionPerformed
 
     private void button_MultiPlayerBet_ProceedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_MultiPlayerBet_ProceedActionPerformed
@@ -1596,6 +1661,72 @@ public class BuzzGUI extends javax.swing.JFrame {
         this.label_Score.setText(r.getString("BuzzGUI.label_Score.text"));
     }//GEN-LAST:event_button_EnglishLanguageActionPerformed
 
+    private void button_HighscoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_HighscoresActionPerformed
+        try {
+            ArrayList<Player> list = FileOperator.readerFun();   
+            String myString = "<html><center>";
+            for(int i = list.size()-1 ; i >= list.size()-5 ; --i){
+                myString += list.get(i).getName()+ " "+list.get(i).getPoints()+"<br>";
+            }
+            myString += "</center></html>";
+            this.label_HighSingle.setText(myString);
+            
+            ArrayList<Matchup> multiList = FileOperator.readerFunMulti();
+            String myStringMulti = "<html><center>";
+            
+            for(int i = multiList.size()-1 ; i >= multiList.size()-5 ; --i){
+                myStringMulti += multiList.get(i).getP1().getName() +" "+ multiList.get(i).getP1().getPoints()+ " vs "+multiList.get(i).getP2().getName() +" "+ multiList.get(i).getP2().getPoints()+"<br>";
+            }
+            myStringMulti += "</center></html>";
+            this.label_HighMulti.setText(myStringMulti);
+            
+            
+            this.Highscores.setVisible(true);
+            this.Menu.setVisible(false);
+        } catch (IOException ex) {
+            Logger.getLogger(BuzzGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_button_HighscoresActionPerformed
+
+    private void button_SinglePlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_SinglePlayActionPerformed
+        String playerName = this.textField_SingleName.getText();
+        Player p = new Player(playerName, 0);
+        buzzGame.addPlayer(p);
+
+        int numberOfRounds = Integer.parseInt(this.textField_NumberOfRounds.getText());
+
+        if(!Game.validateInput(String.valueOf(numberOfRounds), buzzGame.getMaxNumberOfRounds())){
+            JOptionPane.showMessageDialog(rootPane, "Please insert a valid number of rounds!");
+        }
+        else{
+            buzzGame.setNumberOfRounds(numberOfRounds);
+            NUMBER_OF_ROUNDS = buzzGame.getNumberOfRounds();
+            buzzGame.gameSetup();
+            roundsList = buzzGame.getRounds();
+            questionsList = roundsList.get(roundCounter).getRoundQuestions();
+            try {
+                setQuestionLabels();
+            } catch (IOException ex) {
+                Logger.getLogger(BuzzGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.SinglePlayerName.setVisible(false);
+
+        }
+    }//GEN-LAST:event_button_SinglePlayActionPerformed
+
+    private void button_Highscores_BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_Highscores_BackActionPerformed
+            this.Menu.setVisible(true);
+            this.Highscores.setVisible(false);
+    }//GEN-LAST:event_button_Highscores_BackActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1634,11 +1765,8 @@ public class BuzzGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel EndOfGame;
     private javax.swing.JPanel EndOfGameMulti;
+    private javax.swing.JPanel Highscores;
     private javax.swing.JPanel Menu;
-    private javax.swing.JMenuBar MenuBar;
-    private javax.swing.JMenuItem Menu_Exit;
-    private javax.swing.JMenu Menu_File;
-    private javax.swing.JMenuItem Menu_Highscores;
     private javax.swing.JPanel MultiPlayerBet;
     private javax.swing.JPanel MultiPlayerGame;
     private javax.swing.JPanel MultiPlayerNames;
@@ -1655,6 +1783,8 @@ public class BuzzGUI extends javax.swing.JFrame {
     private javax.swing.JButton button_EnglishLanguage;
     private javax.swing.JButton button_Exit;
     private javax.swing.JButton button_GreekLanguage;
+    private javax.swing.JButton button_Highscores;
+    private javax.swing.JButton button_Highscores_Back;
     private javax.swing.JButton button_MultiPlay;
     private javax.swing.JButton button_MultiPlay_Back;
     private javax.swing.JButton button_MultiPlayerBet_Proceed;
@@ -1679,6 +1809,10 @@ public class BuzzGUI extends javax.swing.JFrame {
     private javax.swing.JLabel label_Bet9;
     private javax.swing.JLabel label_EndMessage1;
     private javax.swing.JLabel label_EndMessage_Multi;
+    private javax.swing.JLabel label_HighMulti;
+    private javax.swing.JLabel label_HighSingle;
+    private javax.swing.JLabel label_HighscoreMultiLabel;
+    private javax.swing.JLabel label_HighscoreSingleLabel;
     private javax.swing.JLabel label_ImageContainer;
     private javax.swing.JLabel label_ImageContainerMulti;
     private javax.swing.JLabel label_MultiName1;
