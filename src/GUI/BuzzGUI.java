@@ -10,6 +10,8 @@ import game_package.Player;
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import questions_package.Question;
@@ -49,8 +51,7 @@ public class BuzzGUI extends javax.swing.JFrame {
     public BuzzGUI() {
         initComponents();       
         buzzGame = new Game(); // create new Game instance
-        this.label_NumberOfRounds.setText("Insert # of rounds (1-"+buzzGame.getMaxNumberOfRounds()+"):"); // so that the user can select how many rounds he wants to play
-        this.label_Multi_NumberOfRounds.setText("Insert # of rounds (1-"+buzzGame.getMaxNumberOfRounds()+"):"); // same in multi-player mode
+        
         imageQuestionTypes.add("Cinema"); // question files with attached images
         imageQuestionTypes.add("Music");
         
@@ -65,7 +66,7 @@ public class BuzzGUI extends javax.swing.JFrame {
         if(questionCounter == QUESTIONS_PER_ROUND){ // question counter reaches limit
             roundCounter ++; // next round
             if(roundCounter == NUMBER_OF_ROUNDS){ // round counter reaches limit 
-               this.label_Score.setText("You scored " + String.valueOf(buzzGame.getPlayers().get(0).getPoints()) + " points!");
+               this.label_Score.setText(this.label_Score.getText() + String.valueOf(buzzGame.getPlayers().get(0).getPoints()));
                this.EndOfGame.setVisible(true); // display end of game panel
                this.SinglePlayerGame.setVisible(false); 
                roundCounter = 0; // reset counters
@@ -216,6 +217,8 @@ public class BuzzGUI extends javax.swing.JFrame {
         button_NewGame = new javax.swing.JButton();
         button_Exit = new javax.swing.JButton();
         label_Welcome = new javax.swing.JLabel();
+        button_GreekLanguage = new javax.swing.JButton();
+        button_EnglishLanguage = new javax.swing.JButton();
         NewGame = new javax.swing.JPanel();
         label_NumberOfPlayers = new javax.swing.JLabel();
         comboBox_NumberOfPlayers = new javax.swing.JComboBox<>();
@@ -287,6 +290,10 @@ public class BuzzGUI extends javax.swing.JFrame {
         button_EndOfGame_Exit_Multi = new javax.swing.JButton();
         button_EndOfGame_Back_Multi = new javax.swing.JButton();
         label_EndMessage_Multi = new javax.swing.JLabel();
+        MenuBar = new javax.swing.JMenuBar();
+        Menu_File = new javax.swing.JMenu();
+        Menu_Highscores = new javax.swing.JMenuItem();
+        Menu_Exit = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(850, 700));
@@ -318,6 +325,20 @@ public class BuzzGUI extends javax.swing.JFrame {
         label_Welcome.setText(bundle.getString("BuzzGUI.label_Welcome.text")); // NOI18N
         label_Welcome.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        button_GreekLanguage.setText(bundle.getString("BuzzGUI.button_GreekLanguage.text")); // NOI18N
+        button_GreekLanguage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_GreekLanguageActionPerformed(evt);
+            }
+        });
+
+        button_EnglishLanguage.setText(bundle.getString("BuzzGUI.button_EnglishLanguage.text")); // NOI18N
+        button_EnglishLanguage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_EnglishLanguageActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout MenuLayout = new javax.swing.GroupLayout(Menu);
         Menu.setLayout(MenuLayout);
         MenuLayout.setHorizontalGroup(
@@ -331,18 +352,30 @@ public class BuzzGUI extends javax.swing.JFrame {
             .addGroup(MenuLayout.createSequentialGroup()
                 .addComponent(label_Welcome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(MenuLayout.createSequentialGroup()
+                .addGap(298, 298, 298)
+                .addComponent(button_GreekLanguage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(64, 64, 64)
+                .addComponent(button_EnglishLanguage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(324, 324, 324))
         );
         MenuLayout.setVerticalGroup(
             MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MenuLayout.createSequentialGroup()
-                .addGap(164, 164, 164)
-                .addComponent(label_Welcome, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
-                .addGap(42, 42, 42)
-                .addComponent(button_NewGame, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
+                .addGap(91, 91, 91)
+                .addComponent(label_Welcome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(83, 83, 83)
+                .addGroup(MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(button_GreekLanguage)
+                    .addComponent(button_EnglishLanguage, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(75, 75, 75)
+                .addComponent(button_NewGame, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(button_Exit, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
-                .addGap(194, 194, 194))
+                .addComponent(button_Exit, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(224, 224, 224))
         );
+
+        MenuLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {button_EnglishLanguage, button_GreekLanguage});
 
         getContentPane().add(Menu, "panel_Menu");
 
@@ -354,7 +387,12 @@ public class BuzzGUI extends javax.swing.JFrame {
         label_NumberOfPlayers.setText(bundle.getString("BuzzGUI.label_NumberOfPlayers.text")); // NOI18N
         label_NumberOfPlayers.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        comboBox_NumberOfPlayers.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Single Game", "2 Players" }));
+        comboBox_NumberOfPlayers.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2" }));
+        comboBox_NumberOfPlayers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBox_NumberOfPlayersActionPerformed(evt);
+            }
+        });
 
         button_Proceed.setText(bundle.getString("BuzzGUI.button_Proceed.text")); // NOI18N
         button_Proceed.addActionListener(new java.awt.event.ActionListener() {
@@ -390,13 +428,13 @@ public class BuzzGUI extends javax.swing.JFrame {
             NewGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(NewGameLayout.createSequentialGroup()
                 .addGap(158, 158, 158)
-                .addComponent(label_NumberOfPlayers, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+                .addComponent(label_NumberOfPlayers, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(comboBox_NumberOfPlayers, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                .addComponent(comboBox_NumberOfPlayers, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(button_Proceed, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
+                .addComponent(button_Proceed, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(button_NewGame_Back, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
+                .addComponent(button_NewGame_Back, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
                 .addGap(180, 180, 180))
         );
 
@@ -463,13 +501,13 @@ public class BuzzGUI extends javax.swing.JFrame {
             SinglePlayerNameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(SinglePlayerNameLayout.createSequentialGroup()
                 .addGap(67, 67, 67)
-                .addComponent(label_SingleName, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+                .addComponent(label_SingleName, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
                 .addGap(32, 32, 32)
-                .addComponent(textField_SingleName, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
+                .addComponent(textField_SingleName, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
                 .addGap(34, 34, 34)
-                .addComponent(label_NumberOfRounds, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
+                .addComponent(label_NumberOfRounds, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
                 .addGap(29, 29, 29)
-                .addComponent(textField_NumberOfRounds, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
+                .addComponent(textField_NumberOfRounds, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
                 .addGap(84, 84, 84)
                 .addGroup(SinglePlayerNameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(button_SinglePlay, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
@@ -546,15 +584,15 @@ public class BuzzGUI extends javax.swing.JFrame {
                 .addGap(40, 40, 40)
                 .addComponent(label_MultiName1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(textField_MultiName1, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
+                .addComponent(textField_MultiName1, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
                 .addGap(29, 29, 29)
                 .addComponent(label_MultiName2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(textField_MultiName2, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
+                .addComponent(textField_MultiName2, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(label_Multi_NumberOfRounds, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
+                .addComponent(label_Multi_NumberOfRounds, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(textField_Multi_NumberOfRounds, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
+                .addComponent(textField_Multi_NumberOfRounds, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
                 .addGap(41, 41, 41)
                 .addGroup(MultiPlayerNamesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(button_MultiPlay, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
@@ -642,7 +680,7 @@ public class BuzzGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(radioButton_Bet1000, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(57, 57, 57)
-                .addComponent(button_SinglePlayerBet_Proceed, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+                .addComponent(button_SinglePlayerBet_Proceed, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
                 .addGap(135, 135, 135))
         );
 
@@ -723,11 +761,11 @@ public class BuzzGUI extends javax.swing.JFrame {
             SinglePlayerGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(SinglePlayerGameLayout.createSequentialGroup()
                 .addGap(58, 58, 58)
-                .addComponent(label_RoundType, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
+                .addComponent(label_RoundType, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(label_ImageContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 235, Short.MAX_VALUE)
                 .addGap(46, 46, 46)
-                .addComponent(label_QuestionSentence, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
+                .addComponent(label_QuestionSentence, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(radioButton_First, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -737,7 +775,7 @@ public class BuzzGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(radioButton_Fourth, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(button_SinglePlayerSubmit, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
+                .addComponent(button_SinglePlayerSubmit, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
                 .addGap(31, 31, 31))
         );
 
@@ -861,7 +899,7 @@ public class BuzzGUI extends javax.swing.JFrame {
                     .addComponent(label_Bet5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(label_Bet8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(44, 44, 44)
-                .addComponent(button_MultiPlayerBet_Proceed, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+                .addComponent(button_MultiPlayerBet_Proceed, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
                 .addGap(135, 135, 135))
         );
 
@@ -964,7 +1002,7 @@ public class BuzzGUI extends javax.swing.JFrame {
             MultiPlayerGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MultiPlayerGameLayout.createSequentialGroup()
                 .addGap(58, 58, 58)
-                .addComponent(label_RoundTypeMulti, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
+                .addComponent(label_RoundTypeMulti, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(label_ImageContainerMulti, javax.swing.GroupLayout.PREFERRED_SIZE, 235, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -982,7 +1020,7 @@ public class BuzzGUI extends javax.swing.JFrame {
                     .addComponent(label_Player1Keys, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
                     .addComponent(label_Player2Keys, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
                 .addGap(14, 14, 14)
-                .addComponent(button_MultiPlayerSubmit, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
+                .addComponent(button_MultiPlayerSubmit, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1037,9 +1075,9 @@ public class BuzzGUI extends javax.swing.JFrame {
                 .addGap(40, 40, 40)
                 .addComponent(label_Score, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(56, 56, 56)
-                .addComponent(button_EndOfGame_Back, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
+                .addComponent(button_EndOfGame_Back, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
                 .addGap(31, 31, 31)
-                .addComponent(button_EndOfGame_Exit, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
+                .addComponent(button_EndOfGame_Exit, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
                 .addGap(123, 123, 123))
         );
 
@@ -1094,13 +1132,25 @@ public class BuzzGUI extends javax.swing.JFrame {
                 .addGap(40, 40, 40)
                 .addComponent(label_ScoreMulti, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(56, 56, 56)
-                .addComponent(button_EndOfGame_Back_Multi, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
+                .addComponent(button_EndOfGame_Back_Multi, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
                 .addGap(31, 31, 31)
-                .addComponent(button_EndOfGame_Exit_Multi, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
+                .addComponent(button_EndOfGame_Exit_Multi, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
                 .addGap(123, 123, 123))
         );
 
         getContentPane().add(EndOfGameMulti, "card7");
+
+        Menu_File.setText(bundle.getString("BuzzGUI.Menu_File.text")); // NOI18N
+
+        Menu_Highscores.setText(bundle.getString("BuzzGUI.Menu_Highscores.text")); // NOI18N
+        Menu_File.add(Menu_Highscores);
+
+        Menu_Exit.setText(bundle.getString("BuzzGUI.Menu_Exit.text")); // NOI18N
+        Menu_File.add(Menu_Exit);
+
+        MenuBar.add(Menu_File);
+
+        setJMenuBar(MenuBar);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -1108,6 +1158,8 @@ public class BuzzGUI extends javax.swing.JFrame {
     private void button_NewGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_NewGameActionPerformed
         NewGame.setVisible(true);
         Menu.setVisible(false);
+        this.label_NumberOfRounds.setText(this.label_NumberOfRounds.getText()+" (1-"+buzzGame.getMaxNumberOfRounds()+"):"); // so that the user can select how many rounds he wants to play
+        this.label_Multi_NumberOfRounds.setText(this.label_Multi_NumberOfRounds.getText()+" (1-"+buzzGame.getMaxNumberOfRounds()+"):"); // same in multi-player mode
     }//GEN-LAST:event_button_NewGameActionPerformed
 
     private void button_ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_ExitActionPerformed
@@ -1467,6 +1519,83 @@ public class BuzzGUI extends javax.swing.JFrame {
         buzzGame = new Game();
     }//GEN-LAST:event_button_EndOfGame_Back_MultiActionPerformed
 
+    private void comboBox_NumberOfPlayersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBox_NumberOfPlayersActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboBox_NumberOfPlayersActionPerformed
+
+    private void button_GreekLanguageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_GreekLanguageActionPerformed
+         Locale l = new Locale("gr", "GRE");
+        ResourceBundle r = ResourceBundle.getBundle("GUI/Bundle", l);
+        this.label_Welcome.setText(r.getString("BuzzGUI.label_Welcome.text"));
+        this.button_NewGame.setText(r.getString("BuzzGUI.button_NewGame.text"));
+        this.button_Exit.setText(r.getString("BuzzGUI.button_Exit.text"));
+        this.label_NumberOfPlayers.setText(r.getString("BuzzGUI.label_NumberOfPlayers.text"));
+        this.button_Proceed.setText(r.getString("BuzzGUI.button_Proceed.text"));
+        this.button_NewGame_Back.setText(r.getString("BuzzGUI.button_NewGame_Back.text"));
+        this.label_SingleName.setText(r.getString("BuzzGUI.label_SingleName.text"));
+        this.label_NumberOfRounds.setText(r.getString("BuzzGUI.label_NumberOfRounds.text"));
+        this.button_SinglePlay.setText(r.getString("BuzzGUI.button_SinglePlay.text"));
+        this.button_SinglePlay_Back.setText(r.getString("BuzzGUI.button_SinglePlay_Back.text"));
+        this.label_MultiName1.setText(r.getString("BuzzGUI.label_MultiName1.text"));
+        this.label_MultiName2.setText(r.getString("BuzzGUI.label_MultiName2.text"));
+        this.button_MultiPlay.setText(r.getString("BuzzGUI.button_MultiPlay.text"));
+        this.button_MultiPlay_Back.setText(r.getString("BuzzGUI.button_MultiPlay_Back.text"));
+        this.label_Bet.setText(r.getString("BuzzGUI.label_Bet.text"));
+        this.label_SinglePlayerBetQuestionType.setText(r.getString("BuzzGUI.label_SinglePlayerBetQuestionType.text"));
+        this.button_SinglePlayerBet_Proceed.setText(r.getString("BuzzGUI.button_SinglePlayerBet_Proceed.text"));
+        this.label_RoundType.setText(r.getString("BuzzGUI.label_RoundType.text"));
+        this.button_SinglePlayerSubmit.setText(r.getString("BuzzGUI.button_SinglePlayerSubmit.text"));
+        this.label_Bet1.setText(r.getString("BuzzGUI.label_Bet1.text"));
+        this.button_MultiPlayerBet_Proceed.setText(r.getString("BuzzGUI.button_MultiPlayerBet_Proceed.text"));
+        this.label_RoundTypeMulti.setText(r.getString("BuzzGUI.label_RoundTypeMulti.text"));
+        this.button_MultiPlayerSubmit.setText(r.getString("BuzzGUI.button_MultiPlayerSubmit.text"));
+        this.label_EndMessage1.setText(r.getString("BuzzGUI.label_EndMessage1.text"));
+        this.button_EndOfGame_Back.setText(r.getString("BuzzGUI.button_EndOfGame_Back.text"));
+        this.button_EndOfGame_Exit.setText(r.getString("BuzzGUI.button_EndOfGame_Exit.text"));
+        this.label_EndMessage_Multi.setText(r.getString("BuzzGUI.label_EndMessage_Multi.text"));
+        this.button_EndOfGame_Back_Multi.setText(r.getString("BuzzGUI.button_EndOfGame_Back_Multi.text"));
+        this.button_EndOfGame_Exit_Multi.setText(r.getString("BuzzGUI.button_EndOfGame_Exit_Multi.text"));
+        this.label_Multi_NumberOfRounds.setText(r.getString("BuzzGUI.label_Multi_NumberOfRounds.text"));
+        this.label_Score.setText(r.getString("BuzzGUI.label_Score.text"));
+    }//GEN-LAST:event_button_GreekLanguageActionPerformed
+
+    private void button_EnglishLanguageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_EnglishLanguageActionPerformed
+        Locale l = new Locale("en", "US");
+        ResourceBundle r = ResourceBundle.getBundle("GUI/Bundle", l);
+        this.label_Welcome.setText(r.getString("BuzzGUI.label_Welcome.text"));
+        this.label_Welcome.setText(r.getString("BuzzGUI.label_Welcome.text"));
+        this.button_NewGame.setText(r.getString("BuzzGUI.button_NewGame.text"));
+        this.button_Exit.setText(r.getString("BuzzGUI.button_Exit.text"));
+        this.label_NumberOfPlayers.setText(r.getString("BuzzGUI.label_NumberOfPlayers.text"));
+        this.button_Proceed.setText(r.getString("BuzzGUI.button_Proceed.text"));
+        this.button_NewGame_Back.setText(r.getString("BuzzGUI.button_NewGame_Back.text"));
+        this.label_SingleName.setText(r.getString("BuzzGUI.label_SingleName.text"));
+        this.label_NumberOfRounds.setText(r.getString("BuzzGUI.label_NumberOfRounds.text"));
+        this.button_SinglePlay.setText(r.getString("BuzzGUI.button_SinglePlay.text"));
+        this.button_SinglePlay_Back.setText(r.getString("BuzzGUI.button_SinglePlay_Back.text"));
+        this.label_MultiName1.setText(r.getString("BuzzGUI.label_MultiName1.text"));
+        this.label_MultiName2.setText(r.getString("BuzzGUI.label_MultiName2.text"));
+        this.button_MultiPlay.setText(r.getString("BuzzGUI.button_MultiPlay.text"));
+        this.button_MultiPlay_Back.setText(r.getString("BuzzGUI.button_MultiPlay_Back.text"));
+        this.label_Bet.setText(r.getString("BuzzGUI.label_Bet.text"));
+        this.label_SinglePlayerBetQuestionType.setText(r.getString("BuzzGUI.label_SinglePlayerBetQuestionType.text"));
+        this.button_SinglePlayerBet_Proceed.setText(r.getString("BuzzGUI.button_SinglePlayerBet_Proceed.text"));
+        this.label_RoundType.setText(r.getString("BuzzGUI.label_RoundType.text"));
+        this.button_SinglePlayerSubmit.setText(r.getString("BuzzGUI.button_SinglePlayerSubmit.text"));
+        this.label_Bet1.setText(r.getString("BuzzGUI.label_Bet1.text"));
+        this.button_MultiPlayerBet_Proceed.setText(r.getString("BuzzGUI.button_MultiPlayerBet_Proceed.text"));
+        this.label_RoundTypeMulti.setText(r.getString("BuzzGUI.label_RoundTypeMulti.text"));
+        this.button_MultiPlayerSubmit.setText(r.getString("BuzzGUI.button_MultiPlayerSubmit.text"));
+        this.label_EndMessage1.setText(r.getString("BuzzGUI.label_EndMessage1.text"));
+        this.button_EndOfGame_Back.setText(r.getString("BuzzGUI.button_EndOfGame_Back.text"));
+        this.button_EndOfGame_Exit.setText(r.getString("BuzzGUI.button_EndOfGame_Exit.text"));
+        this.label_EndMessage_Multi.setText(r.getString("BuzzGUI.label_EndMessage_Multi.text"));
+        this.button_EndOfGame_Back_Multi.setText(r.getString("BuzzGUI.button_EndOfGame_Back_Multi.text"));
+        this.button_EndOfGame_Exit_Multi.setText(r.getString("BuzzGUI.button_EndOfGame_Exit_Multi.text"));
+        this.label_Multi_NumberOfRounds.setText(r.getString("BuzzGUI.label_Multi_NumberOfRounds.text"));
+        this.label_Score.setText(r.getString("BuzzGUI.label_Score.text"));
+    }//GEN-LAST:event_button_EnglishLanguageActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1506,6 +1635,10 @@ public class BuzzGUI extends javax.swing.JFrame {
     private javax.swing.JPanel EndOfGame;
     private javax.swing.JPanel EndOfGameMulti;
     private javax.swing.JPanel Menu;
+    private javax.swing.JMenuBar MenuBar;
+    private javax.swing.JMenuItem Menu_Exit;
+    private javax.swing.JMenu Menu_File;
+    private javax.swing.JMenuItem Menu_Highscores;
     private javax.swing.JPanel MultiPlayerBet;
     private javax.swing.JPanel MultiPlayerGame;
     private javax.swing.JPanel MultiPlayerNames;
@@ -1519,7 +1652,9 @@ public class BuzzGUI extends javax.swing.JFrame {
     private javax.swing.JButton button_EndOfGame_Back_Multi;
     private javax.swing.JButton button_EndOfGame_Exit;
     private javax.swing.JButton button_EndOfGame_Exit_Multi;
+    private javax.swing.JButton button_EnglishLanguage;
     private javax.swing.JButton button_Exit;
+    private javax.swing.JButton button_GreekLanguage;
     private javax.swing.JButton button_MultiPlay;
     private javax.swing.JButton button_MultiPlay_Back;
     private javax.swing.JButton button_MultiPlayerBet_Proceed;
