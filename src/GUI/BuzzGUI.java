@@ -37,6 +37,8 @@ public class BuzzGUI extends javax.swing.JFrame {
     private int player2BetInput = 0;
     private long millisStart;
     private long millisEnd;
+    private long user1Millis;
+    private long user2Millis;
     private int user1Input = 0 ;
     private int user2Input = 0 ;
     
@@ -133,8 +135,10 @@ public class BuzzGUI extends javax.swing.JFrame {
         if(questionCounter == QUESTIONS_PER_ROUND){ // question counter reaches limit
             roundCounter ++; // next round
             if(roundCounter == NUMBER_OF_ROUNDS){ // round counter reaches limit 
-               this.label_Score.setText("You scored " + String.valueOf(buzzGame.getPlayers().get(0).getPoints()) + " points!");
-               this.EndOfGame.setVisible(true); // display end of game panel
+               Player p1 = buzzGame.getPlayers().get(0);
+               Player p2 = buzzGame.getPlayers().get(1);
+               this.label_ScoreMulti.setText(p1.getName()+": "+p1.getPoints()+", "+p2.getName()+": "+p2.getPoints());
+               this.EndOfGameMulti.setVisible(true); // display end of game panel
                this.MultiPlayerGame.setVisible(false); 
                roundCounter = 0; // reset counters
                questionCounter = 0;
@@ -149,10 +153,15 @@ public class BuzzGUI extends javax.swing.JFrame {
          if("Bet".equals(roundsList.get(roundCounter).getRoundType())){ // if round type is "Bet" don't show question at first
                 this.MultiPlayerBet.setVisible(true);
                 this.MultiPlayerGame.setVisible(false);
+                this.MultiPlayerBet.requestFocus(true);
+                this.MultiPlayerGame.requestFocus(false);
                 this.label_MultiPlayerBetQuestionType.setText(currentQuestion.getType());
          }
          else{
             this.MultiPlayerGame.setVisible(true);
+            this.MultiPlayerBet.requestFocus(false);
+            this.MultiPlayerGame.requestFocus(true);
+            
          }
         
         if(imageQuestionTypes.contains(currentQuestion.getType())){ // display ImageQuestion
@@ -183,13 +192,12 @@ public class BuzzGUI extends javax.swing.JFrame {
             this.label_QuestionMulti4.setText(currentQuestion.getPossibleAnswers()[3]);
         
         }
-//        if("Stop Timer".equals(roundsList.get(roundCounter).getRoundType())){
-//                this.label_RoundType.setText(roundsList.get(roundCounter).getRoundType()+" 5 secs left!");
-//                this.SinglePlayerGame.setVisible(true);
-//                millisStart = System.currentTimeMillis();
-//                millisEnd = System.currentTimeMillis() + 5000;
-//                this.SinglePlayerGame.setVisible(true);
-//         }
+        if("Stop Timer".equals(roundsList.get(roundCounter).getRoundType())){
+                this.label_RoundTypeMulti.setText(roundsList.get(roundCounter).getRoundType()+"...5 secs left!");
+                this.MultiPlayerGame.setVisible(true);
+                millisStart = System.currentTimeMillis();
+                millisEnd = millisStart + 5000;
+         }
         
     }
 
@@ -249,7 +257,7 @@ public class BuzzGUI extends javax.swing.JFrame {
         MultiPlayerBet = new javax.swing.JPanel();
         label_Bet1 = new javax.swing.JLabel();
         label_MultiPlayerBetQuestionType = new javax.swing.JLabel();
-        button_SinglePlayerBet_Proceed1 = new javax.swing.JButton();
+        button_MultiPlayerBet_Proceed = new javax.swing.JButton();
         label_Bet2 = new javax.swing.JLabel();
         label_Bet3 = new javax.swing.JLabel();
         label_Bet4 = new javax.swing.JLabel();
@@ -274,6 +282,11 @@ public class BuzzGUI extends javax.swing.JFrame {
         button_EndOfGame_Exit = new javax.swing.JButton();
         button_EndOfGame_Back = new javax.swing.JButton();
         label_EndMessage1 = new javax.swing.JLabel();
+        EndOfGameMulti = new javax.swing.JPanel();
+        label_ScoreMulti = new javax.swing.JLabel();
+        button_EndOfGame_Exit_Multi = new javax.swing.JButton();
+        button_EndOfGame_Back_Multi = new javax.swing.JButton();
+        label_EndMessage_Multi = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(850, 700));
@@ -747,10 +760,10 @@ public class BuzzGUI extends javax.swing.JFrame {
         label_MultiPlayerBetQuestionType.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label_MultiPlayerBetQuestionType.setText(bundle.getString("BuzzGUI.label_MultiPlayerBetQuestionType.text")); // NOI18N
 
-        button_SinglePlayerBet_Proceed1.setText(bundle.getString("BuzzGUI.button_SinglePlayerBet_Proceed1.text")); // NOI18N
-        button_SinglePlayerBet_Proceed1.addActionListener(new java.awt.event.ActionListener() {
+        button_MultiPlayerBet_Proceed.setText(bundle.getString("BuzzGUI.button_MultiPlayerBet_Proceed.text")); // NOI18N
+        button_MultiPlayerBet_Proceed.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_SinglePlayerBet_Proceed1ActionPerformed(evt);
+                button_MultiPlayerBet_ProceedActionPerformed(evt);
             }
         });
 
@@ -802,7 +815,7 @@ public class BuzzGUI extends javax.swing.JFrame {
             .addComponent(label_MultiPlayerBetQuestionType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(MultiPlayerBetLayout.createSequentialGroup()
                 .addGap(291, 291, 291)
-                .addComponent(button_SinglePlayerBet_Proceed1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(button_MultiPlayerBet_Proceed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(294, 294, 294))
             .addGroup(MultiPlayerBetLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
@@ -848,7 +861,7 @@ public class BuzzGUI extends javax.swing.JFrame {
                     .addComponent(label_Bet5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(label_Bet8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(44, 44, 44)
-                .addComponent(button_SinglePlayerBet_Proceed1, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+                .addComponent(button_MultiPlayerBet_Proceed, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
                 .addGap(135, 135, 135))
         );
 
@@ -1032,6 +1045,63 @@ public class BuzzGUI extends javax.swing.JFrame {
 
         getContentPane().add(EndOfGame, "card7");
 
+        EndOfGameMulti.setBackground(new java.awt.Color(0, 204, 153));
+
+        label_ScoreMulti.setFont(new java.awt.Font("Courier New", 1, 36)); // NOI18N
+        label_ScoreMulti.setForeground(new java.awt.Color(255, 255, 255));
+        label_ScoreMulti.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_ScoreMulti.setText(bundle.getString("BuzzGUI.label_ScoreMulti.text")); // NOI18N
+
+        button_EndOfGame_Exit_Multi.setText(bundle.getString("BuzzGUI.button_EndOfGame_Exit_Multi.text")); // NOI18N
+        button_EndOfGame_Exit_Multi.setToolTipText(bundle.getString("BuzzGUI.button_EndOfGame_Exit_Multi.toolTipText")); // NOI18N
+        button_EndOfGame_Exit_Multi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_EndOfGame_Exit_MultiActionPerformed(evt);
+            }
+        });
+
+        button_EndOfGame_Back_Multi.setText(bundle.getString("BuzzGUI.button_EndOfGame_Back_Multi.text")); // NOI18N
+        button_EndOfGame_Back_Multi.setToolTipText(bundle.getString("BuzzGUI.button_EndOfGame_Back_Multi.toolTipText")); // NOI18N
+        button_EndOfGame_Back_Multi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_EndOfGame_Back_MultiActionPerformed(evt);
+            }
+        });
+
+        label_EndMessage_Multi.setFont(new java.awt.Font("Courier New", 1, 36)); // NOI18N
+        label_EndMessage_Multi.setForeground(new java.awt.Color(255, 255, 255));
+        label_EndMessage_Multi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_EndMessage_Multi.setText(bundle.getString("BuzzGUI.label_EndMessage_Multi.text")); // NOI18N
+
+        javax.swing.GroupLayout EndOfGameMultiLayout = new javax.swing.GroupLayout(EndOfGameMulti);
+        EndOfGameMulti.setLayout(EndOfGameMultiLayout);
+        EndOfGameMultiLayout.setHorizontalGroup(
+            EndOfGameMultiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(label_EndMessage_Multi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(label_ScoreMulti, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EndOfGameMultiLayout.createSequentialGroup()
+                .addGap(270, 270, 270)
+                .addGroup(EndOfGameMultiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(button_EndOfGame_Back_Multi, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
+                    .addComponent(button_EndOfGame_Exit_Multi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(266, 266, 266))
+        );
+        EndOfGameMultiLayout.setVerticalGroup(
+            EndOfGameMultiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EndOfGameMultiLayout.createSequentialGroup()
+                .addGap(154, 154, 154)
+                .addComponent(label_EndMessage_Multi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(40, 40, 40)
+                .addComponent(label_ScoreMulti, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(56, 56, 56)
+                .addComponent(button_EndOfGame_Back_Multi, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
+                .addGap(31, 31, 31)
+                .addComponent(button_EndOfGame_Exit_Multi, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
+                .addGap(123, 123, 123))
+        );
+
+        getContentPane().add(EndOfGameMulti, "card7");
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
@@ -1081,7 +1151,6 @@ public class BuzzGUI extends javax.swing.JFrame {
             setQuestionLabels2();
             this.MultiPlayerNames.setVisible(false);
             this.MultiPlayerGame.requestFocus();
-            
         }
     }//GEN-LAST:event_button_MultiPlayActionPerformed
 
@@ -1207,30 +1276,30 @@ public class BuzzGUI extends javax.swing.JFrame {
         
         if(roundsList.get(roundCounter).getRoundType().equals("Bet")){
             if((user1Input == 0) || (user2Input == 0)){
-                    JOptionPane.showMessageDialog(rootPane, "Both players should commit answer!");    
+                    JOptionPane.showMessageDialog(rootPane, "Both players should commit answer!");
+                    this.MultiPlayerGame.requestFocus(true);
                     return;
             }else{
-            
                 temp1 = roundsList.get(roundCounter).evaluateAnwser(q, user1Input)*player1BetInput;
                 temp2 = roundsList.get(roundCounter).evaluateAnwser(q, user2Input)*player2BetInput;
                 buzzGame.getPlayers().get(0).addPoints(temp1);
                 buzzGame.getPlayers().get(1).addPoints(temp2);
+                System.out.println("Player one got: " + temp1 + " points, Player two got: " + temp2+ " points.");
             }
         }
         else if(roundsList.get(roundCounter).getRoundType().equals("Stop Timer")){ 
-            if(System.currentTimeMillis() < millisEnd){  
                 StopTimer tempCurrentStopTimerRound;
                 tempCurrentStopTimerRound = (StopTimer) roundsList.get(roundCounter);
                 
-                temp1 = tempCurrentStopTimerRound.evaluateAnwser(q, user1Input, millisEnd - System.currentTimeMillis());
-                temp2 = tempCurrentStopTimerRound.evaluateAnwser(q, user2Input, millisEnd - System.currentTimeMillis());
+                temp1 = tempCurrentStopTimerRound.evaluateAnwser(q, user1Input, user1Millis);
+                temp2 = tempCurrentStopTimerRound.evaluateAnwser(q, user2Input, user2Millis);
                 
                 buzzGame.getPlayers().get(0).addPoints(temp1);
                 buzzGame.getPlayers().get(1).addPoints(temp2);
-            }
-            else{
-                JOptionPane.showMessageDialog(rootPane, "Time finished, cannot accept answer!");
-            }
+                
+                System.out.println("Player one answered in: " + user1Millis + " player two in: " + user2Millis);
+                System.out.println("Player one got: " + temp1 + " points, Player two got: " + temp2+ " points.");
+                user1Millis = user2Millis = 0;
         }
         else{
             if((user1Input == 0) || (user2Input == 0)){
@@ -1242,27 +1311,29 @@ public class BuzzGUI extends javax.swing.JFrame {
 
                 buzzGame.getPlayers().get(0).addPoints(temp1);
                 buzzGame.getPlayers().get(1).addPoints(temp2);
+                
+                System.out.println("Player one got: " + temp1 + " points, Player two got: " + temp2+ " points.");
             }
         }
-        
         user1Input = user2Input = 0;
         player1BetInput = player2BetInput = 0;
         questionCounter++;
-        setQuestionLabels();
-        
-        
+        setQuestionLabels2();
     }//GEN-LAST:event_button_MultiPlayerSubmitActionPerformed
 
-    private void button_SinglePlayerBet_Proceed1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_SinglePlayerBet_Proceed1ActionPerformed
+    private void button_MultiPlayerBet_ProceedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_MultiPlayerBet_ProceedActionPerformed
         // TODO add your handling code here:
         if((player1BetInput == 0) || (player2BetInput == 0)){
             JOptionPane.showMessageDialog(rootPane, "Please insert bids!");
+            this.MultiPlayerBet.requestFocus(true);
         }else{
             //emfanise multi game
             this.MultiPlayerGame.setVisible(true);
+            this.MultiPlayerGame.requestFocus(false);
+            this.MultiPlayerGame.requestFocus(true);
             this.MultiPlayerBet.setVisible(false);
         }
-    }//GEN-LAST:event_button_SinglePlayerBet_Proceed1ActionPerformed
+    }//GEN-LAST:event_button_MultiPlayerBet_ProceedActionPerformed
 
     private void MultiPlayerBetKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_MultiPlayerBetKeyPressed
         // TODO add your handling code here:
@@ -1306,34 +1377,95 @@ public class BuzzGUI extends javax.swing.JFrame {
         switch(tempKey){
             case 'q' :
                 user1Input = 1;
+                if(millisEnd - System.currentTimeMillis() > 0){
+                    user1Millis = millisEnd - System.currentTimeMillis();
+                }
+                else{
+                    user1Millis = 0;
+                }
                 break;
             case 'w' :
                 user1Input = 2;
+                if(millisEnd - System.currentTimeMillis() > 0){
+                    user1Millis = millisEnd - System.currentTimeMillis();
+                }
+                else{
+                    user1Millis = 0;
+                }
                 break;
             case 'e' :
                 user1Input = 3;
+                if(millisEnd - System.currentTimeMillis() > 0){
+                    user1Millis = millisEnd - System.currentTimeMillis();
+                }
+                else{
+                    user1Millis = 0;
+                }
                 break;
             case 'r' :
                 user1Input = 4;
+                if(millisEnd - System.currentTimeMillis() > 0){
+                    user1Millis = millisEnd - System.currentTimeMillis();
+                }
+                else{
+                    user1Millis = 0;
+                }
                 break;
             case 'u' :
                 user2Input = 1;
+                if(millisEnd - System.currentTimeMillis() > 0){
+                    user2Millis = millisEnd - System.currentTimeMillis();
+                }
+                else{
+                    user2Millis = 0;
+                }
                 break;
             case 'i' :
                 user2Input = 2;
+                if(millisEnd - System.currentTimeMillis() > 0){
+                    user2Millis = millisEnd - System.currentTimeMillis();
+                }
+                else{
+                    user2Millis = 0;
+                }
                 break;
             case 'o' :
                 user2Input = 3;
+                if(millisEnd - System.currentTimeMillis() > 0){
+                    user2Millis = millisEnd - System.currentTimeMillis();
+                }
+                else{
+                    user2Millis = 0;
+                }
                 break;
             case 'p' :
                 user2Input = 4;
+                if(millisEnd - System.currentTimeMillis() > 0){
+                    user2Millis = millisEnd - System.currentTimeMillis();
+                }
+                else{
+                    user2Millis = 0;
+                }
                 break;
             default:
                 break;
-            
         }        
         
     }//GEN-LAST:event_MultiPlayerGameKeyPressed
+
+    private void button_EndOfGame_Exit_MultiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_EndOfGame_Exit_MultiActionPerformed
+        System.exit(0);
+        dispose();
+    }//GEN-LAST:event_button_EndOfGame_Exit_MultiActionPerformed
+
+    private void button_EndOfGame_Back_MultiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_EndOfGame_Back_MultiActionPerformed
+        this.Menu.setVisible(true);
+        this.EndOfGameMulti.setVisible(false);
+        this.textField_MultiName1.setText("");
+        this.textField_MultiName2.setText("");
+        this.textField_Multi_NumberOfRounds.setText("");
+        buzzGame = new Game();
+    }//GEN-LAST:event_button_EndOfGame_Back_MultiActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1372,6 +1504,7 @@ public class BuzzGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel EndOfGame;
+    private javax.swing.JPanel EndOfGameMulti;
     private javax.swing.JPanel Menu;
     private javax.swing.JPanel MultiPlayerBet;
     private javax.swing.JPanel MultiPlayerGame;
@@ -1383,10 +1516,13 @@ public class BuzzGUI extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup_Bet;
     private javax.swing.ButtonGroup buttonGroup_SinglePlayer;
     private javax.swing.JButton button_EndOfGame_Back;
+    private javax.swing.JButton button_EndOfGame_Back_Multi;
     private javax.swing.JButton button_EndOfGame_Exit;
+    private javax.swing.JButton button_EndOfGame_Exit_Multi;
     private javax.swing.JButton button_Exit;
     private javax.swing.JButton button_MultiPlay;
     private javax.swing.JButton button_MultiPlay_Back;
+    private javax.swing.JButton button_MultiPlayerBet_Proceed;
     private javax.swing.JButton button_MultiPlayerSubmit;
     private javax.swing.JButton button_NewGame;
     private javax.swing.JButton button_NewGame_Back;
@@ -1394,7 +1530,6 @@ public class BuzzGUI extends javax.swing.JFrame {
     private javax.swing.JButton button_SinglePlay;
     private javax.swing.JButton button_SinglePlay_Back;
     private javax.swing.JButton button_SinglePlayerBet_Proceed;
-    private javax.swing.JButton button_SinglePlayerBet_Proceed1;
     private javax.swing.JButton button_SinglePlayerSubmit;
     private javax.swing.JComboBox<String> comboBox_NumberOfPlayers;
     private javax.swing.JLabel label_Bet;
@@ -1408,6 +1543,7 @@ public class BuzzGUI extends javax.swing.JFrame {
     private javax.swing.JLabel label_Bet8;
     private javax.swing.JLabel label_Bet9;
     private javax.swing.JLabel label_EndMessage1;
+    private javax.swing.JLabel label_EndMessage_Multi;
     private javax.swing.JLabel label_ImageContainer;
     private javax.swing.JLabel label_ImageContainerMulti;
     private javax.swing.JLabel label_MultiName1;
@@ -1427,6 +1563,7 @@ public class BuzzGUI extends javax.swing.JFrame {
     private javax.swing.JLabel label_RoundType;
     private javax.swing.JLabel label_RoundTypeMulti;
     private javax.swing.JLabel label_Score;
+    private javax.swing.JLabel label_ScoreMulti;
     private javax.swing.JLabel label_SingleName;
     private javax.swing.JLabel label_SinglePlayerBetQuestionType;
     private javax.swing.JLabel label_Welcome;
