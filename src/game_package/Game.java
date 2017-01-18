@@ -14,7 +14,9 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 import questions_package.ImageQuestion;
 import questions_package.Question;
+import rounds_package.QuickAnswer;
 import rounds_package.StopTimer;
+import rounds_package.Thermometer;
 
 /**
  * Class that represents a buzz game. Contains functions needed to implement the basic logic, to load the game questions and to validate the user's input
@@ -25,7 +27,7 @@ public class Game {
     
     private static BufferedReader br = null;
     
-    private final static int NUMBER_OF_ROUND_TYPES = 3; // Bet and CorrectAnswer
+    private int NUMBER_OF_ROUND_TYPES; // default, single player
     private final static int NUMBER_OF_QUESTIONS_PER_ROUND = 5; // We thought five was a good number of questions per round
     
     private int numberOfRounds;
@@ -54,6 +56,10 @@ public class Game {
      */
     public int getNumberOfRounds() {
         return numberOfRounds;
+    }
+
+    public void setNUMBER_OF_ROUND_TYPES(int NUMBER_OF_ROUND_TYPES) {
+        this.NUMBER_OF_ROUND_TYPES = NUMBER_OF_ROUND_TYPES;
     }
 
     /**
@@ -116,7 +122,7 @@ public class Game {
      *
      * @return the number of round types
      */
-    public static int getNUMBER_OF_ROUND_TYPES() {
+    public int getNUMBER_OF_ROUND_TYPES() {
         return NUMBER_OF_ROUND_TYPES;
     }
     
@@ -181,6 +187,24 @@ public class Game {
                         questionsIterator.remove();
                     }
                     rounds.add(new StopTimer(NUMBER_OF_QUESTIONS_PER_ROUND , tempQuestionList));
+
+                    break;
+                case 3: 
+                    // add NUMBER_OF_QUESTIONS_PER_ROUND to round object and remove them from allQuestions list
+                    for(int j = 0 ; j < NUMBER_OF_QUESTIONS_PER_ROUND ; ++j){
+                        tempQuestionList.add(questionsIterator.next());
+                        questionsIterator.remove();
+                    }
+                    rounds.add(new QuickAnswer(NUMBER_OF_QUESTIONS_PER_ROUND , tempQuestionList));
+
+                    break;
+                case 4: 
+                    // add NUMBER_OF_QUESTIONS_PER_ROUND to round object and remove them from allQuestions list
+                    for(int j = 0 ; j < NUMBER_OF_QUESTIONS_PER_ROUND ; ++j){
+                        tempQuestionList.add(questionsIterator.next());
+                        questionsIterator.remove();
+                    }
+                    rounds.add(new Thermometer(NUMBER_OF_QUESTIONS_PER_ROUND , tempQuestionList));
 
                     break;
                default: 

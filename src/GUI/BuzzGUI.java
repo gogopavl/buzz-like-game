@@ -21,8 +21,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import questions_package.Question;
 import questions_package.ImageQuestion;
+import rounds_package.QuickAnswer;
 import rounds_package.Round;
 import rounds_package.StopTimer;
+import rounds_package.Thermometer;
 
 /**
  * Class implementing the graphical user interface of the application
@@ -31,6 +33,7 @@ import rounds_package.StopTimer;
  */
 public class BuzzGUI extends javax.swing.JFrame {
     
+    Locale l = new Locale("en","US");    
     private static Game buzzGame;
     private int NUMBER_OF_ROUNDS = 0;
     private final int QUESTIONS_PER_ROUND = Game.getNUMBER_OF_QUESTIONS_PER_ROUND();
@@ -39,15 +42,9 @@ public class BuzzGUI extends javax.swing.JFrame {
     private ArrayList<Round> roundsList;
     private ArrayList<Question> questionsList;
     private HashSet<String> imageQuestionTypes = new HashSet<String>();
-    private int betTempInput = 0;
-    private int player1BetInput = 0;
-    private int player2BetInput = 0;
+    
     private long millisStart;
     private long millisEnd;
-    private long user1Millis;
-    private long user2Millis;
-    private int user1Input = 0 ;
-    private int user2Input = 0 ;
     
 
     /**
@@ -69,6 +66,22 @@ public class BuzzGUI extends javax.swing.JFrame {
      */
     public void setQuestionLabels() throws IOException{        
         if(questionCounter == QUESTIONS_PER_ROUND){ // question counter reaches limit
+            Player p1 = buzzGame.getPlayers().get(0);
+            Player p2 = buzzGame.getPlayers().get(1);
+            
+            if("Thermometer".equals(roundsList.get(roundCounter).getRoundType())){
+                if(p1.getThermometerCounter() > p2.getThermometerCounter()){
+                    p1.addPoints(1000*p1.getThermometerCounter());
+                }else if(p1.getThermometerCounter() < p2.getThermometerCounter()){
+                    p2.addPoints(1000*p2.getThermometerCounter());
+                }
+                else{
+                    p1.addPoints(500*p1.getThermometerCounter());
+                    p2.addPoints(500*p2.getThermometerCounter());
+                }
+                p1.setThermometerCounter(0);
+                p2.setThermometerCounter(0);
+            }
             roundCounter ++; // next round
             if(roundCounter == NUMBER_OF_ROUNDS){ // round counter reaches limit 
                this.label_Score.setText(this.label_Score.getText() + String.valueOf(buzzGame.getPlayers().get(0).getPoints()));
@@ -138,7 +151,7 @@ public class BuzzGUI extends javax.swing.JFrame {
      * so that in case of a "Bet" round the users can bid
      * without seeing the question
      */
-    public void setQuestionLabels2() throws IOException{        
+    public void setQuestionLabelsMultiPlayer() throws IOException{        
         if(questionCounter == QUESTIONS_PER_ROUND){ // question counter reaches limit
             roundCounter ++; // next round
             if(roundCounter == NUMBER_OF_ROUNDS){ // round counter reaches limit 
@@ -201,10 +214,14 @@ public class BuzzGUI extends javax.swing.JFrame {
         
         }
         if("Stop Timer".equals(roundsList.get(roundCounter).getRoundType())){
-                this.label_RoundTypeMulti.setText(roundsList.get(roundCounter).getRoundType()+"...5 secs left!");
+                this.label_RoundTypeMulti.setText(roundsList.get(roundCounter).getRoundType()+"...5''!");
                 this.MultiPlayerGame.setVisible(true);
                 millisStart = System.currentTimeMillis();
                 millisEnd = millisStart + 5000;
+         }
+        if("Quick Answer".equals(roundsList.get(roundCounter).getRoundType())){
+                millisStart = System.currentTimeMillis();
+                millisEnd = millisStart;
          }
         
     }
@@ -1263,11 +1280,16 @@ public class BuzzGUI extends javax.swing.JFrame {
         
         buzzGame.addPlayer(new Player(player1Name, 0));
         buzzGame.addPlayer(new Player(player2Name, 0));
+        buzzGame.setNUMBER_OF_ROUND_TYPES(5);
         
         int numberOfRounds = Integer.parseInt(this.textField_Multi_NumberOfRounds.getText());
         
         if(!Game.validateInput(String.valueOf(numberOfRounds), buzzGame.getMaxNumberOfRounds())){
-            JOptionPane.showMessageDialog(rootPane, "Please insert a valid number of rounds!");
+            if("gr".equals(l.getLanguage())){
+                JOptionPane.showMessageDialog(rootPane, "Εισάγετε έναν έγκυρο αριθμό γύρων!");
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Please insert a valid number of rounds!");
+            }
         }
         else{
             buzzGame.setNumberOfRounds(numberOfRounds);
@@ -1276,7 +1298,7 @@ public class BuzzGUI extends javax.swing.JFrame {
             roundsList = buzzGame.getRounds();
             questionsList = roundsList.get(roundCounter).getRoundQuestions();
             try {
-                setQuestionLabels2();
+                setQuestionLabelsMultiPlayer();
             } catch (IOException ex) {
                 Logger.getLogger(BuzzGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1318,7 +1340,7 @@ public class BuzzGUI extends javax.swing.JFrame {
         Question q = questionsList.get(questionCounter);
         
         if(roundsList.get(roundCounter).getRoundType().equals("Bet")){
-            temp = roundsList.get(roundCounter).evaluateAnwser(q, userInput)*betTempInput;
+            temp = roundsList.get(roundCounter).evaluateAnwser(q, userInput)*buzzGame.getPlayers().get(0).getBetBid();
             buzzGame.getPlayers().get(0).addPoints(temp);
         }
         else if(roundsList.get(roundCounter).getRoundType().equals("Stop Timer")){
@@ -1327,17 +1349,20 @@ public class BuzzGUI extends javax.swing.JFrame {
                 tempCurrentStopTimerRound = (StopTimer) roundsList.get(roundCounter);
                 temp = tempCurrentStopTimerRound.evaluateAnwser(q, userInput, millisEnd - System.currentTimeMillis());
                 buzzGame.getPlayers().get(0).addPoints(temp);
-                System.out.println("points: "+ temp);
             }
             else{
-                JOptionPane.showMessageDialog(rootPane, "Time finished, cannot accept answer!");
+                if("gr".equals(l.getLanguage())){
+                    JOptionPane.showMessageDialog(rootPane, "Η απάντηση δεν έγινε δεκτή, καθώς ο χρόνος έληξε!");
+                }else{
+                    JOptionPane.showMessageDialog(rootPane, "Time's up! Answer not accepted!");
+                }
+                this.MultiPlayerGame.requestFocus(true);
             }
         }
         else{
             temp = roundsList.get(roundCounter).evaluateAnwser(q, userInput);
             buzzGame.getPlayers().get(0).addPoints(temp);
         }
-        System.out.println("points: " + temp);
         
         this.buttonGroup_SinglePlayer.clearSelection();
         questionCounter++;
@@ -1367,16 +1392,16 @@ public class BuzzGUI extends javax.swing.JFrame {
         this.SinglePlayerBet.setVisible(false);
         
         if(this.radioButton_Bet250.isSelected()){
-            betTempInput = 250;
+            buzzGame.getPlayers().get(0).setBetBid(250);
         }
         else if(this.radioButton_Bet500.isSelected()){
-            betTempInput = 500;
+            buzzGame.getPlayers().get(0).setBetBid(500);
         }
         else if(this.radioButton_Bet750.isSelected()){
-            betTempInput = 750;
+            buzzGame.getPlayers().get(0).setBetBid(750);
         }
         else if(this.radioButton_Bet1000.isSelected()){
-            betTempInput = 1000;
+            buzzGame.getPlayers().get(0).setBetBid(1000);
         }
         this.buttonGroup_Bet.clearSelection();
     }//GEN-LAST:event_button_SinglePlayerBet_ProceedActionPerformed
@@ -1387,52 +1412,71 @@ public class BuzzGUI extends javax.swing.JFrame {
         
         int temp1, temp2;
         
-        if(roundsList.get(roundCounter).getRoundType().equals("Bet")){
-            if((user1Input == 0) || (user2Input == 0)){
-                    JOptionPane.showMessageDialog(rootPane, "Both players should commit answer!");
+        if((buzzGame.getPlayers().get(0).getInput() == 0) || (buzzGame.getPlayers().get(1).getInput() == 0)){
+                    if("gr".equals(l.getLanguage())){
+                        JOptionPane.showMessageDialog(rootPane, "Και οι δύο παίκτες πρέπει να απαντήσουν!");
+                    }else{
+                        JOptionPane.showMessageDialog(rootPane, "Both players must commit their answer!");
+                    }
                     this.MultiPlayerGame.requestFocus(true);
                     return;
-            }else{
-                temp1 = roundsList.get(roundCounter).evaluateAnwser(q, user1Input)*player1BetInput;
-                temp2 = roundsList.get(roundCounter).evaluateAnwser(q, user2Input)*player2BetInput;
-                buzzGame.getPlayers().get(0).addPoints(temp1);
-                buzzGame.getPlayers().get(1).addPoints(temp2);
-                System.out.println("Player one got: " + temp1 + " points, Player two got: " + temp2+ " points.");
-            }
-        }
-        else if(roundsList.get(roundCounter).getRoundType().equals("Stop Timer")){ 
-                StopTimer tempCurrentStopTimerRound;
-                tempCurrentStopTimerRound = (StopTimer) roundsList.get(roundCounter);
-                
-                temp1 = tempCurrentStopTimerRound.evaluateAnwser(q, user1Input, user1Millis);
-                temp2 = tempCurrentStopTimerRound.evaluateAnwser(q, user2Input, user2Millis);
-                
-                buzzGame.getPlayers().get(0).addPoints(temp1);
-                buzzGame.getPlayers().get(1).addPoints(temp2);
-                
-                System.out.println("Player one answered in: " + user1Millis + " player two in: " + user2Millis);
-                System.out.println("Player one got: " + temp1 + " points, Player two got: " + temp2+ " points.");
-                user1Millis = user2Millis = 0;
-        }
-        else{
-            if((user1Input == 0) || (user2Input == 0)){
-                JOptionPane.showMessageDialog(rootPane, "Both players should commit answer!");
-                return;
-            }else{
-                temp1 = roundsList.get(roundCounter).evaluateAnwser(q, user1Input);
-                temp2 = roundsList.get(roundCounter).evaluateAnwser(q, user2Input);
+        }else{        
+            if(roundsList.get(roundCounter).getRoundType().equals("Bet")){
 
-                buzzGame.getPlayers().get(0).addPoints(temp1);
-                buzzGame.getPlayers().get(1).addPoints(temp2);
-                
-                System.out.println("Player one got: " + temp1 + " points, Player two got: " + temp2+ " points.");
+                    temp1 = roundsList.get(roundCounter).evaluateAnwser(q, buzzGame.getPlayers().get(0).getInput())*buzzGame.getPlayers().get(0).getBetBid();
+                    temp2 = roundsList.get(roundCounter).evaluateAnwser(q, buzzGame.getPlayers().get(1).getInput())*buzzGame.getPlayers().get(1).getBetBid();
+                    buzzGame.getPlayers().get(0).addPoints(temp1);
+                    buzzGame.getPlayers().get(1).addPoints(temp2);
+            }
+            else if(roundsList.get(roundCounter).getRoundType().equals("Stop Timer")){ 
+                    StopTimer tempCurrentStopTimerRound;
+                    tempCurrentStopTimerRound = (StopTimer) roundsList.get(roundCounter);
+
+                    temp1 = tempCurrentStopTimerRound.evaluateAnwser(q, buzzGame.getPlayers().get(0).getInput(), buzzGame.getPlayers().get(0).getMillisST());
+                    temp2 = tempCurrentStopTimerRound.evaluateAnwser(q, buzzGame.getPlayers().get(1).getInput(), buzzGame.getPlayers().get(1).getMillisST());
+
+                    buzzGame.getPlayers().get(0).addPoints(temp1);
+                    buzzGame.getPlayers().get(1).addPoints(temp2);
+
+                    buzzGame.getPlayers().get(0).setMillisST(0);
+                    buzzGame.getPlayers().get(1).setMillisST(0);
+            }
+            else if(roundsList.get(roundCounter).getRoundType().equals("Quick Answer")){ 
+                    QuickAnswer tempCurrentQuickAnswerRound;
+                    tempCurrentQuickAnswerRound = (QuickAnswer) roundsList.get(roundCounter);
+
+                    if(buzzGame.getPlayers().get(0).getMillisQA() < buzzGame.getPlayers().get(1).getMillisQA()){
+                        temp1 = 1000*tempCurrentQuickAnswerRound.evaluateAnwser(q, buzzGame.getPlayers().get(0).getInput());
+                        temp2 = 500*tempCurrentQuickAnswerRound.evaluateAnwser(q, buzzGame.getPlayers().get(1).getInput());
+                    }else{
+                        temp1 = 500*tempCurrentQuickAnswerRound.evaluateAnwser(q, buzzGame.getPlayers().get(0).getInput());
+                        temp2 = 1000*tempCurrentQuickAnswerRound.evaluateAnwser(q, buzzGame.getPlayers().get(1).getInput());
+                    }   
+
+                    buzzGame.getPlayers().get(0).addPoints(temp1);
+                    buzzGame.getPlayers().get(1).addPoints(temp2);
+
+                    buzzGame.getPlayers().get(0).setMillisQA(0);
+                    buzzGame.getPlayers().get(1).setMillisQA(0);
+            }
+            else if(roundsList.get(roundCounter).getRoundType().equals("Correct Answer")){ // correct answer
+                    temp1 = roundsList.get(roundCounter).evaluateAnwser(q, buzzGame.getPlayers().get(0).getInput());
+                    temp2 = roundsList.get(roundCounter).evaluateAnwser(q, buzzGame.getPlayers().get(1).getInput());
+
+                    buzzGame.getPlayers().get(0).addPoints(temp1);
+                    buzzGame.getPlayers().get(1).addPoints(temp2);
             }
         }
-        user1Input = user2Input = 0;
-        player1BetInput = player2BetInput = 0;
+            
+            
+        buzzGame.getPlayers().get(0).setInput(0);
+        buzzGame.getPlayers().get(1).setInput(0);
+        
+        buzzGame.getPlayers().get(0).setBetBid(0);
+        buzzGame.getPlayers().get(1).setBetBid(0);
         questionCounter++;
         try {
-            setQuestionLabels2();
+            setQuestionLabelsMultiPlayer();
         } catch (IOException ex) {
             Logger.getLogger(BuzzGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1440,8 +1484,12 @@ public class BuzzGUI extends javax.swing.JFrame {
 
     private void button_MultiPlayerBet_ProceedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_MultiPlayerBet_ProceedActionPerformed
         // TODO add your handling code here:
-        if((player1BetInput == 0) || (player2BetInput == 0)){
-            JOptionPane.showMessageDialog(rootPane, "Please insert bids!");
+        if((buzzGame.getPlayers().get(0).getBetBid() == 0) || ( buzzGame.getPlayers().get(1).getBetBid() == 0)){
+            if("gr".equals(l.getLanguage())){
+                JOptionPane.showMessageDialog(rootPane, "Και οι δύο παίκτες πρέπει να ποντάρουν!");
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Both players must place their bid!");
+            }
             this.MultiPlayerBet.requestFocus(true);
         }else{
             //emfanise multi game
@@ -1457,111 +1505,119 @@ public class BuzzGUI extends javax.swing.JFrame {
         char tempKey = evt.getKeyChar();
         switch(tempKey){
             case 'q' :
-                player1BetInput = 250;
+                buzzGame.getPlayers().get(0).setBetBid(250);
                 break;
             case 'w' :
-                player1BetInput = 500;
+                buzzGame.getPlayers().get(0).setBetBid(500);
                 break;
             case 'e' :
-                player1BetInput = 750;
+                buzzGame.getPlayers().get(0).setBetBid(750);
                 break;
             case 'r' :
-                player1BetInput = 1000;
+                buzzGame.getPlayers().get(0).setBetBid(1000);
                 break;
             case 'u' :
-                player2BetInput = 250;
+                buzzGame.getPlayers().get(1).setBetBid(250);
                 break;
             case 'i' :
-                player2BetInput = 500;
+                buzzGame.getPlayers().get(1).setBetBid(500);
                 break;
             case 'o' :
-                player2BetInput = 750;
+                buzzGame.getPlayers().get(1).setBetBid(750);
                 break;
             case 'p' :
-                player2BetInput = 1000;
+                buzzGame.getPlayers().get(1).setBetBid(1000);
                 break;
             default:
                 break;
             
         }
-        System.out.println("p1 bet: " + player1BetInput + " p2 bet: " + player2BetInput);
 
     }//GEN-LAST:event_MultiPlayerBetKeyPressed
 
     private void MultiPlayerGameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_MultiPlayerGameKeyPressed
-        System.out.println("pressed "+ evt.getKeyChar());
+
         char tempKey = evt.getKeyChar();
+        
         switch(tempKey){
             case 'q' :
-                user1Input = 1;
+                buzzGame.getPlayers().get(0).setInput(1);
+                buzzGame.getPlayers().get(0).setMillisQA(System.currentTimeMillis());
                 if(millisEnd - System.currentTimeMillis() > 0){
-                    user1Millis = millisEnd - System.currentTimeMillis();
+                    buzzGame.getPlayers().get(0).setMillisST(millisEnd - System.currentTimeMillis());
                 }
                 else{
-                    user1Millis = 0;
+                    buzzGame.getPlayers().get(0).setMillisST(0);
                 }
                 break;
             case 'w' :
-                user1Input = 2;
+                buzzGame.getPlayers().get(0).setInput(2);
+                buzzGame.getPlayers().get(0).setMillisQA(System.currentTimeMillis());
                 if(millisEnd - System.currentTimeMillis() > 0){
-                    user1Millis = millisEnd - System.currentTimeMillis();
+                    buzzGame.getPlayers().get(0).setMillisST(millisEnd - System.currentTimeMillis());
                 }
                 else{
-                    user1Millis = 0;
+                    buzzGame.getPlayers().get(0).setMillisST(0);
                 }
                 break;
             case 'e' :
-                user1Input = 3;
+                buzzGame.getPlayers().get(0).setInput(3);
+                buzzGame.getPlayers().get(0).setMillisQA(System.currentTimeMillis());
                 if(millisEnd - System.currentTimeMillis() > 0){
-                    user1Millis = millisEnd - System.currentTimeMillis();
+                    buzzGame.getPlayers().get(0).setMillisST(millisEnd - System.currentTimeMillis());
                 }
                 else{
-                    user1Millis = 0;
+                    buzzGame.getPlayers().get(0).setMillisST(0);
                 }
                 break;
             case 'r' :
-                user1Input = 4;
+                buzzGame.getPlayers().get(0).setInput(4);
+                buzzGame.getPlayers().get(0).setMillisQA(System.currentTimeMillis());
                 if(millisEnd - System.currentTimeMillis() > 0){
-                    user1Millis = millisEnd - System.currentTimeMillis();
+                    buzzGame.getPlayers().get(0).setMillisST(millisEnd - System.currentTimeMillis());
                 }
                 else{
-                    user1Millis = 0;
+                    buzzGame.getPlayers().get(0).setMillisST(0);
                 }
                 break;
             case 'u' :
-                user2Input = 1;
+                buzzGame.getPlayers().get(1).setInput(1);
+                buzzGame.getPlayers().get(1).setMillisQA(System.currentTimeMillis());
                 if(millisEnd - System.currentTimeMillis() > 0){
-                    user2Millis = millisEnd - System.currentTimeMillis();
+                    buzzGame.getPlayers().get(1).setMillisST(millisEnd - System.currentTimeMillis());
                 }
                 else{
-                    user2Millis = 0;
+                    buzzGame.getPlayers().get(1).setMillisST(0);
                 }
                 break;
             case 'i' :
-                user2Input = 2;
+                buzzGame.getPlayers().get(1).setInput(2);
+                buzzGame.getPlayers().get(1).setMillisQA(System.currentTimeMillis());
                 if(millisEnd - System.currentTimeMillis() > 0){
-                    user2Millis = millisEnd - System.currentTimeMillis();
+                    buzzGame.getPlayers().get(1).setMillisST(millisEnd - System.currentTimeMillis());
                 }
                 else{
-                    user2Millis = 0;
+                    buzzGame.getPlayers().get(1).setMillisST(0);
                 }
                 break;
             case 'o' :
-                user2Input = 3;
+                buzzGame.getPlayers().get(1).setInput(3);
+                buzzGame.getPlayers().get(1).setMillisQA(System.currentTimeMillis());
                 if(millisEnd - System.currentTimeMillis() > 0){
-                    user2Millis = millisEnd - System.currentTimeMillis();
+                    buzzGame.getPlayers().get(1).setMillisST(millisEnd - System.currentTimeMillis());
                 }
                 else{
-                    user2Millis = 0;
+                    buzzGame.getPlayers().get(1).setMillisST(0);
                 }
                 break;
             case 'p' :
-                user2Input = 4;
+                buzzGame.getPlayers().get(1).setInput(4);
+                buzzGame.getPlayers().get(1).setMillisQA(System.currentTimeMillis());
                 if(millisEnd - System.currentTimeMillis() > 0){
-                    user2Millis = millisEnd - System.currentTimeMillis();
+                    buzzGame.getPlayers().get(1).setMillisST(millisEnd - System.currentTimeMillis());
                 }
                 else{
-                    user2Millis = 0;
+                    buzzGame.getPlayers().get(1).setMillisST(0);
                 }
                 break;
             default:
@@ -1589,7 +1645,7 @@ public class BuzzGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_comboBox_NumberOfPlayersActionPerformed
 
     private void button_GreekLanguageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_GreekLanguageActionPerformed
-         Locale l = new Locale("gr", "GRE");
+        l = new Locale("gr", "GRE");
         ResourceBundle r = ResourceBundle.getBundle("GUI/Bundle", l);
         this.label_Welcome.setText(r.getString("BuzzGUI.label_Welcome.text"));
         this.button_NewGame.setText(r.getString("BuzzGUI.button_NewGame.text"));
@@ -1622,10 +1678,16 @@ public class BuzzGUI extends javax.swing.JFrame {
         this.button_EndOfGame_Exit_Multi.setText(r.getString("BuzzGUI.button_EndOfGame_Exit_Multi.text"));
         this.label_Multi_NumberOfRounds.setText(r.getString("BuzzGUI.label_Multi_NumberOfRounds.text"));
         this.label_Score.setText(r.getString("BuzzGUI.label_Score.text"));
+        this.label_HighscoreMultiLabel.setText(r.getString("BuzzGUI.label_HighscoreMultiLabel.text"));
+        this.label_HighscoreSingleLabel.setText(r.getString("BuzzGUI.label_HighscoreSingleLabel.text"));
+        this.button_Highscores_Back.setText(r.getString("BuzzGUI.button_Highscores_Back.text"));
+        this.button_Highscores.setText(r.getString("BuzzGUI.button_Highscores.text"));
+        
+        
     }//GEN-LAST:event_button_GreekLanguageActionPerformed
 
     private void button_EnglishLanguageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_EnglishLanguageActionPerformed
-        Locale l = new Locale("en", "US");
+        l = new Locale("en", "US");
         ResourceBundle r = ResourceBundle.getBundle("GUI/Bundle", l);
         this.label_Welcome.setText(r.getString("BuzzGUI.label_Welcome.text"));
         this.label_Welcome.setText(r.getString("BuzzGUI.label_Welcome.text"));
@@ -1659,6 +1721,10 @@ public class BuzzGUI extends javax.swing.JFrame {
         this.button_EndOfGame_Exit_Multi.setText(r.getString("BuzzGUI.button_EndOfGame_Exit_Multi.text"));
         this.label_Multi_NumberOfRounds.setText(r.getString("BuzzGUI.label_Multi_NumberOfRounds.text"));
         this.label_Score.setText(r.getString("BuzzGUI.label_Score.text"));
+        this.label_HighscoreMultiLabel.setText(r.getString("BuzzGUI.label_HighscoreMultiLabel.text"));
+        this.label_HighscoreSingleLabel.setText(r.getString("BuzzGUI.label_HighscoreSingleLabel.text"));
+        this.button_Highscores_Back.setText(r.getString("BuzzGUI.button_Highscores_Back.text"));
+        this.button_Highscores.setText(r.getString("BuzzGUI.button_Highscores.text"));
     }//GEN-LAST:event_button_EnglishLanguageActionPerformed
 
     private void button_HighscoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_HighscoresActionPerformed
@@ -1686,25 +1752,22 @@ public class BuzzGUI extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(BuzzGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        
-        
-        
-        
-        
-        
     }//GEN-LAST:event_button_HighscoresActionPerformed
 
     private void button_SinglePlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_SinglePlayActionPerformed
         String playerName = this.textField_SingleName.getText();
         Player p = new Player(playerName, 0);
         buzzGame.addPlayer(p);
+        buzzGame.setNUMBER_OF_ROUND_TYPES(3);
 
         int numberOfRounds = Integer.parseInt(this.textField_NumberOfRounds.getText());
 
         if(!Game.validateInput(String.valueOf(numberOfRounds), buzzGame.getMaxNumberOfRounds())){
-            JOptionPane.showMessageDialog(rootPane, "Please insert a valid number of rounds!");
+            if("gr".equals(l.getLanguage())){
+                JOptionPane.showMessageDialog(rootPane, "Εισάγετε έναν έγκυρο αριθμό γύρων!");
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Please insert a valid number of rounds!");
+            }            
         }
         else{
             buzzGame.setNumberOfRounds(numberOfRounds);

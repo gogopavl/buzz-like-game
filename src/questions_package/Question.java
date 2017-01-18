@@ -123,10 +123,8 @@ public class Question {
      */
     public boolean checkAnswer(int option){
         if(possibleAnswers[option-1].equals(correctAnswer)){
-            System.out.println("\nΣωστή απάντηση :)\n");
             return true;
         }else{
-            System.out.println("\nΛάθος απάντηση :(\n");
             return false;
         }
     }

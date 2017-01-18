@@ -7,10 +7,9 @@ package rounds_package;
 
 import java.util.ArrayList;
 import questions_package.Question;
-import static sun.security.krb5.Confounder.intValue;
 
 /**
- *
+ * @author desppapa
  * @author gogopavl
  */
 public class StopTimer extends Round{
