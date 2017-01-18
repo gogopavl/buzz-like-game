@@ -70,46 +70,90 @@ public class Player {
         points = points + p;
     }  
     
+    /**
+     * 
+     * @param value an integer number (0 or 1) 
+     */
     public void addToThermometerCounter(int value){
         this.thermometerCounter += value;
     }
 
+    /**
+     * 
+     * @return the player's input
+     */
     public int getInput() {
         return input;
     }
 
+    /**
+     * 
+     * @param input a given player's input
+     */
     public void setInput(int input) {
         this.input = input;
     }
 
+    /**
+     * 
+     * @return the player's time at Stop Timer round
+     */
     public long getMillisST() {
         return millisST;
     }
 
+    /**
+     * 
+     * @param millisST a player's time at Stop Timer round
+     */
     public void setMillisST(long millisST) {
         this.millisST = millisST;
     }
 
+    /**
+     * 
+     * @return the player's time at Quick Answer round
+     */
     public long getMillisQA() {
         return millisQA;
     }
 
+    /**
+     * 
+     * @param millisQA a given player's time at Quick Answer round
+     */
     public void setMillisQA(long millisQA) {
         this.millisQA = millisQA;
     }
 
+    /**
+     * 
+     * @return the player's bid
+     */
     public int getBetBid() {
         return betBid;
     }
 
+    /**
+     * 
+     * @param betBid a given player's bid
+     */
     public void setBetBid(int betBid) {
         this.betBid = betBid;
     }
 
+    /**
+     * 
+     * @return the player's number of correct answers
+     */
     public int getThermometerCounter() {
         return thermometerCounter;
     }
 
+    /**
+     * 
+     * @param thermometerCounter a given player's number of correct answers
+     */
     public void setThermometerCounter(int thermometerCounter) {
         this.thermometerCounter = thermometerCounter;
     }

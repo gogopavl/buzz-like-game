@@ -9,11 +9,17 @@ import java.util.ArrayList;
 import questions_package.Question;
 
 /**
+ * Class that extends a Round object - type of a game round
  * @author desppapa
  * @author gogopavl
  */
 public class Thermometer extends Round{
     
+    /**
+     * Constructor
+     * @param nQ number of questions
+     * @param rQ list of round questions
+     */
     public Thermometer(int nQ, ArrayList<Question> rQ) {
         super(nQ, rQ);
     }
@@ -22,12 +28,21 @@ public class Thermometer extends Round{
     //METHODS
     /////////////////////////////////////////////////
  
-    
+    /**
+     * 
+     * @return the current round type
+     */
     @Override
     public String getRoundType() {
         return "Thermometer";
     }
     
+    /**
+     * Thermometer method that evaluates the number of points to be returned, based on the question's answer
+     * @param q The question
+     * @param userInput player's answer
+     * @return an integer value
+     */
     @Override
     public int evaluateAnwser(Question q, int userInput){
       

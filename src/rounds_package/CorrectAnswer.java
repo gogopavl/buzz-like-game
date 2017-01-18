@@ -24,14 +24,18 @@ public class CorrectAnswer extends Round{
     //METHODS
     /////////////////////////////////////////////////
     
-    /**
-     * Method that prints the round type
-     */
-    @Override
-    public void printRoundType() {
-        System.out.println("Σωστή Απάντηση - Για κάθε σωστή απάντηση παίρνετε 1000 πόντους.\n");
-    }
+//    /**
+//     * Method that prints the round type
+//     */
+//    @Override
+//    public void printRoundType() {
+//        System.out.println("Σωστή Απάντηση - Για κάθε σωστή απάντηση παίρνετε 1000 πόντους.\n");
+//    }
     
+    /**
+     * 
+     * @return the current round type
+     */
     @Override
     public String getRoundType() {
         return "Correct Answer";
@@ -44,13 +48,6 @@ public class CorrectAnswer extends Round{
     @Override
     public int evaluateAnwser(Question q, int userInput){
         String usrIn;
-       
-//        q.displayQuestion();
-       
-//        System.out.print("Για να απαντήσετε πιέστε από 1-4: ");
-//        do{
-//            usrIn = answerInput.nextLine();
-//        }while(!Game.validateInput(usrIn, 4));
 
         if(q.checkAnswer(userInput)){
             return 1000;

@@ -27,7 +27,7 @@ public class Game {
     
     private static BufferedReader br = null;
     
-    private int NUMBER_OF_ROUND_TYPES; // default, single player
+    private int NUMBER_OF_ROUND_TYPES;
     private final static int NUMBER_OF_QUESTIONS_PER_ROUND = 5; // We thought five was a good number of questions per round
     
     private int numberOfRounds;
@@ -58,6 +58,10 @@ public class Game {
         return numberOfRounds;
     }
 
+    /**
+     * 
+     * @param NUMBER_OF_ROUND_TYPES a given number of round types
+     */
     public void setNUMBER_OF_ROUND_TYPES(int NUMBER_OF_ROUND_TYPES) {
         this.NUMBER_OF_ROUND_TYPES = NUMBER_OF_ROUND_TYPES;
     }
@@ -231,11 +235,11 @@ public class Game {
             
             localQuestionList = currentRound.getRoundQuestions();
             
-            for(Question currentQuestion : localQuestionList){
-                
-//                listOfPlayers.get(0).addPoints(currentRound.evaluateAnwser(currentQuestion, 0));
-                
-            }
+//            for(Question currentQuestion : localQuestionList){
+//                
+//               listOfPlayers.get(0).addPoints(currentRound.evaluateAnwser(currentQuestion, 0));
+//                
+//            }
         }
         System.out.println("\nΤο παιχνίδι ολοκληρώθηκε! Το σκορ που σημειώσατε είναι: "+ listOfPlayers.get(0).getPoints() + " πόντοι.");
     }
